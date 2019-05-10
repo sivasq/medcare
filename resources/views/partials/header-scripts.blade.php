@@ -1,0 +1,43 @@
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Twitter -->
+<meta name="twitter:site" content="@themepixels">
+<meta name="twitter:creator" content="@themepixels">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Slim">
+<meta name="twitter:description" content="Premium Quality and Responsive UI for Dashboard.">
+<meta name="twitter:image" content="http://themepixels.me/slim/img/slim-social.png">
+
+<!-- Facebook -->
+<meta property="og:url" content="http://themepixels.me/slim">
+<meta property="og:title" content="Slim">
+<meta property="og:description" content="Premium Quality and Responsive UI for Dashboard.">
+
+<meta property="og:image" content="http://themepixels.me/slim/img/slim-social.png">
+<meta property="og:image:secure_url" content="http://themepixels.me/slim/img/slim-social.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="600">
+
+<!-- Meta -->
+<meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
+<meta name="author" content="ThemePixels">
+
+{{-- CSRF Token --}}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<title>{{ config('app.name', 'MedCare') }}</title>
+
+@section('headerscripts')
+	<!-- Vendor css -->
+	<link href="{{asset('assets/lib/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+	<link href="{{asset('assets/lib/Ionicons/css/ionicons.css')}}" rel="stylesheet">
+
+	{{--<link rel="stylesheet" href="{{asset('assets/css/slim.css')}}">--}}
+	{{--<link rel="stylesheet" href="{{asset('assets/css/slim.one.css')}}">--}}
+@show
+<!-- Slim CSS -->
+<link rel="stylesheet" href="{{asset('assets/css/slim.css')}}">
