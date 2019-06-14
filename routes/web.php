@@ -29,6 +29,27 @@ Route::get('/work/progress', 'WorkQueueController@workprogress')->name('work.pro
 
 Route::resource('work', 'WorkQueueController');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/db', function () {
 	return view('pages.dashboard');
 });

@@ -19,7 +19,9 @@
 					<table class="table table-striped table-hover mg-b-0">
 						<thead>
 						<tr>
-							<th>Client</th>
+							<th>Name</th>
+							<th>Age</th>
+							<th>Gender</th>
 							<th>Reviewer</th>
 							<th>Status</th>
 							<th>Summary Report</th>
@@ -31,7 +33,10 @@
 						<tbody>
 						@foreach ($works as $work)
 							<tr>
-								<th scope="row">{{ $work->clientDetail->script_id }}</th>
+								<th scope="row"><a href="{{url('work/progress')}}">{{ $work->clientDetail->name }}</a>
+								</th>
+								<th scope="row">{{ $work->clientDetail->age }}</th>
+								<th scope="row">{{ $work->clientDetail->gender }}</th>
 								<td>
 									@if (empty($work->reviewer_id))
 										<a href="javascript:void(0);" id="dropdownMenuButton{{$work->id}}"
@@ -47,19 +52,29 @@
 												<a href="javascript:void(0);"
 												   class="row justify-content-between pd-b-5-force pd-t-5-force">
 													<div class="col-8">
-														{{ucfirst($reviewer->first_name)}}
+														{{ucfirst($reviewer->name)}}
 													</div>
 													<div class="col text-center">
-														<i class="fa fa-check-circle" style="color: #1a8e06;"></i>
+														@if ($reviewer->work_live_status === 'assigned')
+															<i class="fa fa-check-circle" style="color: #ff0000;"></i>
+														@elseif ($reviewer->work_live_status === 'in_progress')
+															<i class="fa fa-check-circle" style="color: #ffff00;"></i>
+														@elseif ($reviewer->work_live_status === 'completed')
+															<i class="fa fa-check-circle" style="color: #1a8e06;"></i>
+														@elseif ($reviewer->work_live_status === 'not_assigned')
+															<i class="fa fa-circle" style="color: #800080;"></i>
+														@endif
 													</div>
 												</a>
 											@endforeach
 										</div><!-- dropdown-menu -->
 									@else
-										{{ ucfirst($work->reviewerDetail->first_name) }}
+										{{ ucfirst($work->reviewerDetail->name) }}
 									@endif
 								</td>
-								<td><span class="square-8 bg-success mg-r-5 rounded-circle"></span>{{ ucfirst($work->status) }}</td>
+								<td>
+									<span class="square-8 bg-success mg-r-5 rounded-circle"></span>{{ ucfirst($work->status) }}
+								</td>
 								<td>{{ ucfirst($work->summary_report) }}</td>
 								<td><a href="{{route('work.progress')}}">View Scripts</a></td>
 								<td>{{ ucfirst($work->chat_status) }}</td>
