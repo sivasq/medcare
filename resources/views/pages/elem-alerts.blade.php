@@ -16,7 +16,7 @@
           <label class="section-title">Basic Alerts</label>
           <p class="mg-b-20 mg-sm-b-40">Use one of the four required contextual classes</p>
 
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-success" id="flashMessage" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

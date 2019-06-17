@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               8.0.15 - MySQL Community Server - GPL
 -- Server OS:                    Win64
--- HeidiSQL Version:             10.1.0.5464
+-- HeidiSQL Version:             10.2.0.5599
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -13,12 +13,10 @@
 
 
 -- Dumping database structure for medcare
-DROP DATABASE IF EXISTS `medcare`;
 CREATE DATABASE IF NOT EXISTS `medcare` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `medcare`;
 
 -- Dumping structure for table medcare.clients
-DROP TABLE IF EXISTS `clients`;
 CREATE TABLE IF NOT EXISTS `clients` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `all_script_patient_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -42,7 +40,6 @@ REPLACE INTO `clients` (`id`, `all_script_patient_id`, `first_name`, `last_name`
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 
 -- Dumping structure for table medcare.migrations
-DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -61,7 +58,6 @@ REPLACE INTO `migrations` (`id`, `migration`, `batch`) VALUES
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Dumping structure for table medcare.password_resets
-DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -74,7 +70,6 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
 -- Dumping structure for table medcare.users
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -97,17 +92,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_id_number_unique` (`id_number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table medcare.users: ~0 rows (approximately)
+-- Dumping data for table medcare.users: ~4 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 REPLACE INTO `users` (`id`, `first_name`, `last_name`, `name`, `email`, `id_number`, `password`, `start_date`, `end_date`, `account_type`, `user_role`, `work_live_status`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'user1', NULL, 'user1', 'user1@sqindia.net', 'user1 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-05-01', '2019-10-31', NULL, '1', 'assigned', NULL, NULL, NULL, NULL),
-	(2, 'user2', NULL, 'user2', 'user2@sqindia.net', 'user2 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', NULL, '2', 'in_progress', NULL, NULL, NULL, NULL),
-	(3, 'user3', NULL, 'user3', 'user3@sqindia.net', 'user3 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', NULL, '2', 'completed', NULL, NULL, NULL, NULL),
-	(4, 'user4', NULL, 'user4', 'user4@sqindia.net', 'user4 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', NULL, '2', 'not_assigned', NULL, NULL, NULL, NULL);
+	(1, 'user1', NULL, 'user1', 'siva@sqindia.net', 'user1 ID', '$2y$10$95n7mbyeAYJu3ZeSbCseue4io7Z7uy2d6TutJEDBvC/fkyZ2MHdS6', '2019-05-01', '2019-10-31', 'admin', '1', 'assigned', NULL, 'TRtG9CyND40igxZ7XU7vOfiqUcEhYr3A2JmCoJh9aIpGkNYtQnqVZACnDMaX', NULL, '2019-06-17 10:53:29'),
+	(2, 'user2', NULL, 'user2', 'user2@sqindia.net', 'user2 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', 'consultant', '2', 'in_progress', NULL, NULL, NULL, NULL),
+	(3, 'user3', NULL, 'user3', 'user3@sqindia.net', 'user3 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', 'consultant', '2', 'completed', NULL, NULL, NULL, NULL),
+	(4, 'user4', NULL, 'user4', 'user4@sqindia.net', 'user4 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', 'consultant', '2', 'not_assigned', NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table medcare.work_queues
-DROP TABLE IF EXISTS `work_queues`;
 CREATE TABLE IF NOT EXISTS `work_queues` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `client_id` bigint(20) unsigned NOT NULL,
@@ -125,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `work_queues` (
   CONSTRAINT `work_queues_reviewer_id_foreign` FOREIGN KEY (`reviewer_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table medcare.work_queues: ~2 rows (approximately)
+-- Dumping data for table medcare.work_queues: ~5 rows (approximately)
 /*!40000 ALTER TABLE `work_queues` DISABLE KEYS */;
 REPLACE INTO `work_queues` (`id`, `client_id`, `e_script_id`, `reviewer_id`, `status`, `summary_report`, `chat_status`, `created_at`, `updated_at`) VALUES
 	(1, 1, NULL, NULL, 'unassigned', 'pending', NULL, NULL, NULL),

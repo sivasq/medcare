@@ -16,11 +16,11 @@
 				</ol>
 				<h6 class="slim-pagetitle">Create Account</h6>
 			</div><!-- slim-pageheader -->
-
+			
 			<div class="section-wrapper">
-				<label class="section-title">Create New Account</label>
-				<p class="mg-b-20 mg-sm-b-40">Create New Support Executive</p>
-
+				<label class="section-title">Create Account</label>
+				<p class="mg-b-20 mg-sm-b-40">Create New Consultant Account</p>
+				
 				<div class="form-layout">
 					<form method="post" action="{{ route('user.store') }}">
 						@csrf
@@ -32,18 +32,9 @@
 									<select style="width: 100%!important;"
 									        class="form-control select2 {{ $errors->has('account_type') ? ' is-invalid' : '' }}"
 									        name="account_type" data-placeholder="Select an Option">
-										<option label="Choose country"></option>
-										<option value="option1" {{ ( "option1" == old('account_type')) ? 'selected' : '' }}>
-											option1
-										</option>
-										<option value="option2" {{ ( "option2" == old('account_type')) ? 'selected' : '' }}>
-											option2
-										</option>
-										<option value="option3" {{ ( "option3" == old('account_type')) ? 'selected' : '' }}>
-											option3
-										</option>
-										<option value="option4" {{ ( "option4" == old('account_type')) ? 'selected' : '' }}>
-											option4
+										<option label="Choose Account Type"></option>
+										<option value="consultant" {{ ( "consultant" == old('account_type')) ? 'selected' : '' }}>
+											Consultant
 										</option>
 									</select>
 									@if ($errors->has('account_type'))
@@ -53,10 +44,10 @@
 									@endif
 								</div>
 							</div><!-- col-6 -->
-
+							
 							<div class="col-lg-6">
 							</div><!-- col-6 -->
-
+							
 							<div class="col-lg-6">
 								<div class="form-group">
 									<label class="form-control-label">Firstname: <span
@@ -71,7 +62,7 @@
 									@endif
 								</div>
 							</div><!-- col-6 -->
-
+							
 							<div class="col-lg-6">
 								<div class="form-group">
 									<label class="form-control-label">Lastname: <span class="tx-danger">*</span></label>
@@ -84,7 +75,7 @@
 									@endif
 								</div>
 							</div><!-- col-6 -->
-
+							
 							<div class="col-lg-6">
 								<div class="form-group">
 									<label class="form-control-label">ID Number: <span
@@ -99,7 +90,7 @@
 									@endif
 								</div>
 							</div><!-- col-6 -->
-
+							
 							<div class="col-lg-6">
 								<div class="form-group">
 									<label class="form-control-label">Email address: <span
@@ -114,7 +105,7 @@
 									@endif
 								</div>
 							</div><!-- col-6 -->
-
+							
 							<div class="col-lg-6">
 								<div class="form-group mg-b-10-force">
 									<label class="form-control-label">Start Date <span
@@ -128,7 +119,7 @@
 									@endif
 								</div>
 							</div><!-- col-6 -->
-
+							
 							<div class="col-lg-6">
 								<div class="form-group mg-b-10-force">
 									<label class="form-control-label">End Date <span class="tx-danger">*</span></label>
@@ -141,7 +132,7 @@
 									@endif
 								</div>
 							</div><!-- col-6 -->
-
+							
 							<div class="col-lg-6">
 								<div class="form-group">
 									<label class="form-control-label">Password: <span
@@ -156,7 +147,7 @@
 									@endif
 								</div>
 							</div><!-- col-6 -->
-
+							
 							<div class="col-lg-6">
 								<div class="form-group">
 									<label class="form-control-label">Confirm Password: <span
@@ -172,7 +163,7 @@
 								</div>
 							</div><!-- col-6 -->
 						</div><!-- row -->
-
+						
 						<div class="form-layout-footer">
 							<button type="submit" class="btn btn-primary bd-0">Submit</button>
 							<button class="btn btn-secondary bd-0">Cancel</button>
@@ -180,7 +171,7 @@
 					</form><!--Form End -->
 				</div><!-- form-layout -->
 			</div><!-- section-wrapper -->
-
+		
 		</div><!-- container -->
 	</div><!-- slim-mainpanel -->
 @endsection
@@ -189,10 +180,10 @@
 	@parent
 	<script src="{{asset('assets/lib/jquery.cookie/js/jquery.cookie.js')}}"></script>
 	<script src="{{asset('assets/lib/select2/js/select2.min.js')}}"></script>
-
+	
 	<script src="{{asset('assets/lib/moment/js/moment.js')}}"></script>
 	<script src="{{asset('assets/lib/jquery-ui/js/jquery-ui.js')}}"></script>
-
+	
 	<script>
 		$(function () {
 			'use strict'

@@ -18,8 +18,8 @@
 			</div><!-- slim-pageheader -->
 
 			<div class="section-wrapper">
-				<label class="section-title">Edit user Account</label>
-				<p class="mg-b-20 mg-sm-b-40">Edit Support Executive Account</p>
+				<label class="section-title">Edit Account</label>
+				<p class="mg-b-20 mg-sm-b-40">Edit Consultant Account</p>
 
 				<div class="form-layout">
 					<form method="post" action="{{ route('user.update',[$user->id]) }}">
@@ -33,18 +33,9 @@
 									<select style="width: 100%!important;"
 									        class="form-control select2 {{ $errors->has('account_type', $user->account_type) ? ' is-invalid' : '' }}"
 									        name="account_type" data-placeholder="Select an Option">
-										<option label="Choose country"></option>
-										<option value="option1" {{ ( "option1" == old('account_type', $user->account_type)) ? 'selected' : '' }}>
-											option1
-										</option>
-										<option value="option2" {{ ( "option2" == old('account_type', $user->account_type)) ? 'selected' : '' }}>
-											option2
-										</option>
-										<option value="option3" {{ ( "option3" == old('account_type', $user->account_type)) ? 'selected' : '' }}>
-											option3
-										</option>
-										<option value="option4" {{ ( "option4" == old('account_type', $user->account_type)) ? 'selected' : '' }}>
-											option4
+										<option label="Choose Account Type"></option>
+										<option value="consultant" {{ ( "consultant" == old('account_type', $user->account_type)) ? 'selected' : '' }}>
+											Consultant
 										</option>
 									</select>
 									@if ($errors->has('account_type'))
@@ -63,7 +54,8 @@
 									<label class="form-control-label">Firstname: <span
 												class="tx-danger">*</span></label>
 									<input class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}"
-									       type="text" name="first_name" value="{{ old('first_name', $user->first_name) }}"
+									       type="text" name="first_name"
+									       value="{{ old('first_name', $user->first_name) }}"
 									       placeholder="Enter firstname">
 									@if ($errors->has('first_name'))
 										<span class="help-block has-error">
@@ -77,7 +69,8 @@
 								<div class="form-group">
 									<label class="form-control-label">Lastname: <span class="tx-danger">*</span></label>
 									<input class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}"
-									       type="text" name="last_name" value="{{ old('last_name', $user->last_name) }}" placeholder="Enter lastname">
+									       type="text" name="last_name" value="{{ old('last_name', $user->last_name) }}"
+									       placeholder="Enter lastname">
 									@if ($errors->has('last_name'))
 										<span class="help-block has-error">
                                         {{ $errors->first('last_name') }}
@@ -121,7 +114,8 @@
 									<label class="form-control-label">Start Date <span
 												class="tx-danger">*</span></label>
 									<input class="form-control fc-datepicker {{ $errors->has('start_date') ? ' is-invalid' : '' }}"
-									       type="text" name="start_date" value="{{ old('start_date', $user->start_date) }}" placeholder="Start Date">
+									       type="text" name="start_date"
+									       value="{{ old('start_date', $user->start_date) }}" placeholder="Start Date">
 									@if ($errors->has('start_date'))
 										<span class="help-block has-error">
                                         {{ $errors->first('start_date') }}
@@ -134,7 +128,8 @@
 								<div class="form-group mg-b-10-force">
 									<label class="form-control-label">End Date <span class="tx-danger">*</span></label>
 									<input class="form-control fc-datepicker {{ $errors->has('end_date') ? ' is-invalid' : '' }}"
-									       type="text" name="end_date" value="{{ old('end_date', $user->end_date) }}" placeholder="End Date">
+									       type="text" name="end_date" value="{{ old('end_date', $user->end_date) }}"
+									       placeholder="End Date">
 									@if ($errors->has('end_date'))
 										<span class="help-block has-error">
                                         {{ $errors->first('end_date') }}
@@ -166,7 +161,7 @@
 
 	<script>
 		$(function () {
-			'use strict'
+			'use strict';
 
 			// Datepicker
 			$('.fc-datepicker').datepicker({

@@ -3,7 +3,7 @@
 @section('content')
 	<div class="signin-wrapper">
 		<div class="signin-box">
-			<h2 class="slim-logo"><a href="{{url('db')}}">MedCare<span>.</span></a></h2>
+			<h2 class="slim-logo"><a href="{{url('login')}}">MedCare<span>.</span></a></h2>
 			{{--<h2 class="signin-title-primary">Welcome back!</h2>--}}
 			{{--<h3 class="signin-title-secondary">Sign in to continue.</h3>--}}
 
@@ -13,7 +13,7 @@
 				<div class="form-group">
 					<label for="email" class="form-control-label">{{ __('UserName') }} <span class="tx-danger">*</span></label>
 					<input class="form-control @error('email') is-invalid @enderror" type="email" id="email"
-					       name="email" value="{{ old('email') }}"  autocomplete="email" autofocus
+					       name="email" value="{{ old('email') }}" autocomplete="email" autofocus
 					       placeholder="Enter Username">
 					@error('email')
 					<span class="invalid-feedback" role="alert">
@@ -26,7 +26,7 @@
 					<label for="password" class="form-control-label">{{ __('Password') }} <span
 								class="tx-danger">*</span></label>
 					<input class="form-control @error('password') is-invalid @enderror" type="password" id="password"
-					       name="password" value="{{ old('password') }}"  autocomplete="password" autofocus
+					       name="password" value="{{ old('password') }}" autocomplete="password" autofocus
 					       placeholder="Enter Password">
 					@error('password')
 					<span class="invalid-feedback" role="alert">

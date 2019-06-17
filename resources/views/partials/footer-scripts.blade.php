@@ -9,3 +9,9 @@
 @show
 
 <script src="{{asset('assets/js/slim.js')}}"></script>
+
+<script>
+	setTimeout(function() {
+		$('#flashMessage').fadeOut('slow');
+	}, 5000); // <-- time in milliseconds
+</script>

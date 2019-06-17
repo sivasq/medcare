@@ -22,19 +22,19 @@
 							<th>ID Number</th>
 							<th>Name</th>
 							<th>Email</th>
-							<th>Account</th>
-							<th>Date</th>
-							<th>Action</th>
+{{--							<th>Account</th>--}}
+							<th>Active Period</th>
+							<th style="width: 120px;">Action</th>
 						</tr>
 						</thead>
 						<tbody>
 						@foreach ($users as $user)
 							<tr>
-								<th scope="row">{{ $user->id_number }}</th>
+								<td scope="row">{{ $user->id_number }}</td>
 								<td>{{ $user->name }}</td>
 								<td>{{ $user->email }}</td>
-								<td>{{ $user->account_type }}</td>
-								<td>{{ $user->start_date }} to {{ $user->end_date }}</td>
+{{--								<td>{{ $user->account_type }}</td>--}}
+								<td>{{ $user->start_date }} <i>to</i> {{ $user->end_date }}</td>
 								<td>
 									<a class="btn btn-outline-primary btn-icon rounded-circle" href="{{ url('user/'.$user->id.'/edit') }}">
 										<div>
@@ -44,7 +44,7 @@
 									&nbsp;&nbsp;
 									<a class="btn btn-outline-primary btn-icon rounded-circle" href="{{ url('user/'.$user->id) }}">
 										<div>
-											<i class="icon ion-eye tx-18"></i>
+											<i class="icon ion-eye tx-24"></i>
 										</div>
 									</a>
 								</td>
