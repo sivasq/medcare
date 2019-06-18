@@ -2,10 +2,12 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
 	use Notifiable;
 	
@@ -35,4 +37,19 @@ class User extends Authenticatable
 	protected $casts = [
 		'email_verified_at' => 'datetime',
 	];
+	
+	/**
+	 * The model's default values for attributes.
+	 *
+	 * @var array
+	 */
+	protected $attributes = [
+		'user_role' => 2,
+		'work_live_status' => 'not_assigned'
+	];
+	
+	public function setPasswordAttribute($pass)
+	{
+		$this->attributes['password'] = Hash::make($pass);
+	}
 }

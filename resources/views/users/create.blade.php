@@ -26,21 +26,21 @@
 						@csrf
 						<div class="row mg-b-25">
 							<div class="col-lg-6">
-								<div class="form-group mg-b-10-force">
+								<div class="form-group mg-b-10-force parsley-select {{ $errors->has('account_type') ? ' parsley-error' : '' }}">
 									<label class="form-control-label">Type of Account <span
 												class="tx-danger">*</span></label>
 									<select style="width: 100%!important;"
-									        class="form-control select2 {{ $errors->has('account_type') ? ' is-invalid' : '' }}"
+									        class="form-control select2"
 									        name="account_type" data-placeholder="Select an Option">
-										<option label="Choose Account Type"></option>
+										<option value="" label="Choose Account Type"></option>
 										<option value="consultant" {{ ( "consultant" == old('account_type')) ? 'selected' : '' }}>
 											Consultant
 										</option>
 									</select>
 									@if ($errors->has('account_type'))
-										<span class="help-block has-error">
-                                        {{ $errors->first('account_type') }}
-                                    </span>
+										<ul class="parsley-errors-list filled">
+											<li class="parsley-required">{{ $errors->first('account_type') }}</li>
+										</ul>
 									@endif
 								</div>
 							</div><!-- col-6 -->
@@ -52,26 +52,26 @@
 								<div class="form-group">
 									<label class="form-control-label">Firstname: <span
 												class="tx-danger">*</span></label>
-									<input class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}"
-									       type="text" name="first_name" value="John Paul"
+									<input class="form-control {{ $errors->has('first_name') ? ' parsley-error' : '' }}"
+									       type="text" name="first_name" value="{{ old('first_name') }}"
 									       placeholder="Enter firstname">
 									@if ($errors->has('first_name'))
-										<span class="help-block has-error">
-                                        {{ $errors->first('first_name') }}
-                                    </span>
+										<ul class="parsley-errors-list filled">
+											<li class="parsley-required">{{ $errors->first('first_name') }}</li>
+										</ul>
 									@endif
 								</div>
 							</div><!-- col-6 -->
 							
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label class="form-control-label">Lastname: <span class="tx-danger">*</span></label>
-									<input class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}"
-									       type="text" name="last_name" value="McDoe" placeholder="Enter lastname">
+									<label class="form-control-label">Lastname:</label>
+									<input class="form-control {{ $errors->has('last_name') ? ' parsley-error' : '' }}"
+									       type="text" name="last_name" value="{{ old('last_name') }}" placeholder="Enter lastname">
 									@if ($errors->has('last_name'))
-										<span class="help-block has-error">
-                                        {{ $errors->first('last_name') }}
-                                    </span>
+										<ul class="parsley-errors-list filled">
+											<li class="parsley-required">{{ $errors->first('last_name') }}</li>
+										</ul>
 									@endif
 								</div>
 							</div><!-- col-6 -->
@@ -80,13 +80,13 @@
 								<div class="form-group">
 									<label class="form-control-label">ID Number: <span
 												class="tx-danger">*</span></label>
-									<input class="form-control {{ $errors->has('id_number') ? ' is-invalid' : '' }}"
-									       type="text" name="id_number" value="ID123456798"
-									       placeholder="Enter email address">
+									<input class="form-control {{ $errors->has('id_number') ? ' parsley-error' : '' }}"
+									       type="text" name="id_number" value="{{ old('id_number') }}"
+									       placeholder="Enter User ID Number">
 									@if ($errors->has('id_number'))
-										<span class="help-block has-error">
-                                        {{ $errors->first('id_number') }}
-                                    </span>
+										<ul class="parsley-errors-list filled">
+											<li class="parsley-required">{{ $errors->first('id_number') }}</li>
+										</ul>
 									@endif
 								</div>
 							</div><!-- col-6 -->
@@ -95,13 +95,13 @@
 								<div class="form-group">
 									<label class="form-control-label">Email address: <span
 												class="tx-danger">*</span></label>
-									<input class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
-									       type="text" name="email" value="johnpaul@yourdomain.com"
+									<input class="form-control {{ $errors->has('email') ? ' parsley-error' : '' }}"
+									       type="text" name="email" value="{{ old('email') }}"
 									       placeholder="Enter email address">
 									@if ($errors->has('email'))
-										<span class="help-block has-error">
-                                        {{ $errors->first('email') }}
-                                    </span>
+										<ul class="parsley-errors-list filled">
+											<li class="parsley-required">{{ $errors->first('email') }}</li>
+										</ul>
 									@endif
 								</div>
 							</div><!-- col-6 -->
@@ -110,12 +110,12 @@
 								<div class="form-group mg-b-10-force">
 									<label class="form-control-label">Start Date <span
 												class="tx-danger">*</span></label>
-									<input class="form-control fc-datepicker {{ $errors->has('start_date') ? ' is-invalid' : '' }}"
-									       type="text" name="start_date" value="" placeholder="Start Date">
+									<input class="form-control fc-datepicker {{ $errors->has('start_date') ? ' parsley-error' : '' }}"
+									       type="text" name="start_date" value="{{ old('start_date') }}" placeholder="Start Date">
 									@if ($errors->has('start_date'))
-										<span class="help-block has-error">
-                                        {{ $errors->first('start_date') }}
-                                    </span>
+										<ul class="parsley-errors-list filled">
+											<li class="parsley-required">{{ $errors->first('start_date') }}</li>
+										</ul>
 									@endif
 								</div>
 							</div><!-- col-6 -->
@@ -123,12 +123,12 @@
 							<div class="col-lg-6">
 								<div class="form-group mg-b-10-force">
 									<label class="form-control-label">End Date <span class="tx-danger">*</span></label>
-									<input class="form-control fc-datepicker {{ $errors->has('end_date') ? ' is-invalid' : '' }}"
-									       type="text" name="end_date" value="" placeholder="End Date">
+									<input class="form-control fc-datepicker {{ $errors->has('end_date') ? ' parsley-error' : '' }}"
+									       type="text" name="end_date" value="{{ old('end_date') }}" placeholder="End Date">
 									@if ($errors->has('end_date'))
-										<span class="help-block has-error">
-                                        {{ $errors->first('end_date') }}
-                                    </span>
+										<ul class="parsley-errors-list filled">
+											<li class="parsley-required">{{ $errors->first('end_date') }}</li>
+										</ul>
 									@endif
 								</div>
 							</div><!-- col-6 -->
@@ -137,13 +137,13 @@
 								<div class="form-group">
 									<label class="form-control-label">Password: <span
 												class="tx-danger">*</span></label>
-									<input class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
-									       type="password" name="password" value=""
+									<input class="form-control {{ $errors->has('password') ? ' parsley-error' : '' }}"
+									       type="password" name="password" value="{{ old('password') }}"
 									       placeholder="Enter password">
 									@if ($errors->has('password'))
-										<span class="help-block has-error">
-                                        {{ $errors->first('password') }}
-                                    </span>
+										<ul class="parsley-errors-list filled">
+											<li class="parsley-required">{{ $errors->first('password') }}</li>
+										</ul>
 									@endif
 								</div>
 							</div><!-- col-6 -->
@@ -152,13 +152,13 @@
 								<div class="form-group">
 									<label class="form-control-label">Confirm Password: <span
 												class="tx-danger">*</span></label>
-									<input class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
-									       type="password" name="password_confirmation" value=""
+									<input class="form-control {{ $errors->has('password') ? ' parsley-error' : '' }}"
+									       type="password" name="password_confirmation" value="{{ old('password') }}"
 									       placeholder="Enter Confirm password" autocomplete="new-password">
 									@if ($errors->has('password'))
-										<span class="help-block has-error">
-                                        {{ $errors->first('password') }}
-                                    </span>
+										<ul class="parsley-errors-list filled">
+											<li class="parsley-required">{{ $errors->first('password') }}</li>
+										</ul>
 									@endif
 								</div>
 							</div><!-- col-6 -->
