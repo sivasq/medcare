@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Work_queue;
 use App\User;
+use App\Work_queue;
 use Illuminate\Http\Request;
 
 class WorkQueueController extends Controller
@@ -17,7 +17,7 @@ class WorkQueueController extends Controller
 	{
 		$this->middleware(['auth', 'verified']);
 	}
-
+	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -25,11 +25,12 @@ class WorkQueueController extends Controller
 	 */
 	public function index()
 	{
-	    $works = Work_queue::all();
-	    $reviewers = User::all();
-	    return view('works.listall', compact('works','reviewers'));
-
-
+		$works = Work_queue::all();
+		$reviewers = User::where('user_role', 2)->get();
+//	    dd($reviewers);
+		return view('works.listall', compact('works', 'reviewers'));
+		
+		
 		//===================Create client================//
 //		$client = new Client(['header' => ['Accept' => 'application/fhir+json']]);
 //		$request = new GuzRequest('GET', 'https://stu3.test.pyrohealth.net/fhir/Patient/92a6fbf1-f0d3-4f76-8f98-38d6cc54d4ac');
@@ -38,14 +39,28 @@ class WorkQueueController extends Controller
 //		$response_body = json_decode($body);
 //		// Dump on browser
 //		print_r($response_body);
-
+	
 	}
-
+	
 	public function workprogress()
 	{
 		return view('workprogress.work-progress');
 	}
-
+	
+	public function assignworktouser($workid, $userid)
+	{
+		Work_queue::find($workid)
+			->update(['status' => 'assigned', 'reviewer_id' => $userid]);
+		
+		User::where('id', $userid)
+			->where('work_live_status', '!=', 'assigned')
+			->update(['work_live_status' => 'assigned']);
+		
+		return redirect()
+			->back()
+			->with('success', 'Work Successfully Assigned!');
+	}
+	
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -55,7 +70,7 @@ class WorkQueueController extends Controller
 	{
 		//
 	}
-
+	
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -66,7 +81,7 @@ class WorkQueueController extends Controller
 	{
 		//
 	}
-
+	
 	/**
 	 * Display the specified resource.
 	 *
@@ -77,7 +92,7 @@ class WorkQueueController extends Controller
 	{
 		//
 	}
-
+	
 	/**
 	 * Show the form for editing the specified resource.
 	 *
@@ -88,7 +103,7 @@ class WorkQueueController extends Controller
 	{
 		//
 	}
-
+	
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -100,7 +115,7 @@ class WorkQueueController extends Controller
 	{
 		//
 	}
-
+	
 	/**
 	 * Remove the specified resource from storage.
 	 *

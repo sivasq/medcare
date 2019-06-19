@@ -10,11 +10,29 @@
 				</ol>
 				<h6 class="slim-pagetitle">Work Queues</h6>
 			</div><!-- slim-pageheader -->
-
+			
 			<div class="section-wrapper">
 				<label class="section-title">Work Queues</label>
 				<p class="mg-b-20 mg-sm-b-40">List of Work Queues.</p>
-
+				
+				@if (session('success'))
+					<div class="alert  alert-success alert-dismissible fade show" id="flashMessage" role="alert">
+						{{ session('success') }}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				@endif
+				
+				@if (session('error'))
+					<div class="alert alert-danger alert-dismissible fade show" id="flashMessage" role="alert">
+						{{ session('error') }}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				@endif
+				
 				<div class="table-responsive">
 					<table class="table table-striped table-hover mg-b-0">
 						<thead>
@@ -49,7 +67,7 @@
 											<h6 class="tx-gray-800 tx-uppercase dropdown-header">Assign To</h6>
 											<hr class="mg-t-5-force mg-b-5-force">
 											@foreach ($reviewers as $reviewer)
-												<a href="javascript:void(0);"
+												<a href="{{route('work.assign',['workid'=>$work->id,'userid'=>$reviewer->id])}}"
 												   class="row justify-content-between pd-b-5-force pd-t-5-force">
 													<div class="col-8">
 														{{ucfirst($reviewer->name)}}

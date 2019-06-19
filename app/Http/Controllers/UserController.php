@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserEmailVerification;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
+use phpDocumentor\Reflection\Types\Null_;
 
 class UserController extends Controller
 {
@@ -49,7 +55,7 @@ class UserController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$validatedData = $request->validate([
+		$request->validate([
 			'account_type' => 'required',
 			'first_name' => 'required',
 			'last_name' => 'nullable',
@@ -57,16 +63,41 @@ class UserController extends Controller
 			'email' => 'required | email | unique:users',
 			'start_date' => 'required|date|before:end_date',
 			'end_date' => 'required|date|after:start_date',
-			'password' => 'required|confirmed|min:6'
+			'password' => 'required|confirmed|min:3'
 		]);
 		
-		$request->merge(['password' => Hash::make($request->get('password'))]);
 		$request->request->add(['name' => $request->input('first_name') . ' ' . $request->input('last_name')]);
 		$request->request->add(['user_role' => 2]);
 		$request->request->add(['work_live_status' => 'not_assigned']);
 		
-		User::insert($request->except('_token', 'password_confirmation'));
+		$request->merge(['password' => Hash::make($request->get('password'))]);
+		$request->merge(array_map('trim', $request->all()));
+		
+		$user_id = User::insertGetId($request->except('_token', 'password_confirmation'));
+		
+		$user_data = User::find($user_id);
+		$user_data->verifyurl = $this->createVerificationUrl($user_id);
+		
+		Mail::to($user_data)->send(new UserEmailVerification($user_data));
+
+//		Mail::send('emails.verifyemail', $data, function ($message)  use ($request) {
+//			$message->to($request->get('email'), $request->get('name'))
+//				->subject('Verify Email Address');
+//		});
 		return Redirect::route('user.index');
+	}
+	
+	/**
+	 * @param $user_id
+	 * @return string
+	 */
+	public function createVerificationUrl($user_id)
+	{
+		return URL::temporarySignedRoute(
+			'verification.verify',
+			Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+			['id' => $user_id]
+		);
 	}
 	
 	/**
@@ -100,7 +131,7 @@ class UserController extends Controller
 	 */
 	public function update(Request $request, User $user)
 	{
-		$validatedData = $request->validate([
+		$request->validate([
 			'account_type' => 'required',
 			'first_name' => 'required',
 			'last_name' => 'nullable',
@@ -112,7 +143,22 @@ class UserController extends Controller
 		
 		$request->request->add(['name' => $request->input('first_name') . ' ' . $request->input('last_name')]);
 		
+		$request->merge(array_map('trim', $request->all()));
+		
 		$user->find($user->id)->update($request->all());
+		
+		if ($user->email !== $request->input('email')) {
+			
+			$user_data = User::find($user->id);
+			$user_data->email_verified_at = Null;
+			$user_data->save();
+			
+			$user_data['verifyurl'] = $this->createVerificationUrl($user->id);
+			
+			Mail::to($user_data)->send(new UserEmailVerification($user_data));
+			
+			return Redirect::route('user.show', array($request->route('user')));
+		}
 		return Redirect::route('user.show', array($request->route('user')));
 	}
 	
@@ -126,10 +172,5 @@ class UserController extends Controller
 	{
 		//
 	}
-
-//return URL::temporarySignedRoute(
-//'verification.verify',
-//Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
-//['id' => $notifiable->getKey()]
-//);
+	
 }

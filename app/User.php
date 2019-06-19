@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -47,9 +46,4 @@ class User extends Authenticatable implements MustVerifyEmail
 		'user_role' => 2,
 		'work_live_status' => 'not_assigned'
 	];
-	
-	public function setPasswordAttribute($pass)
-	{
-		$this->attributes['password'] = Hash::make($pass);
-	}
 }

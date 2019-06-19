@@ -27,8 +27,9 @@ Route::resource('client', 'ClientController');
 
 Route::get('/work/progress', 'WorkQueueController@workprogress')->name('work.progress');
 
-Route::resource('work', 'WorkQueueController');
+Route::get('/work/{workid}/assign/{userid}', 'WorkQueueController@assignworktouser')->name('work.assign');
 
+Route::resource('work', 'WorkQueueController');
 
 
 
