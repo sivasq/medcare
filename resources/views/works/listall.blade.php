@@ -40,7 +40,9 @@
 							<th>Name</th>
 							<th>Age</th>
 							<th>Gender</th>
-							<th>Reviewer</th>
+							@if(Auth::user()->user_role == 1)
+								<th>Reviewer</th>
+							@endif
 							<th>Status</th>
 							<th>Summary Report</th>
 							<th>E-Scripts</th>
@@ -55,41 +57,46 @@
 								</th>
 								<th scope="row">{{ $work->clientDetail->age }}</th>
 								<th scope="row">{{ $work->clientDetail->gender }}</th>
-								<td>
-									@if (empty($work->reviewer_id))
-										<a href="javascript:void(0);" id="dropdownMenuButton{{$work->id}}"
-										   data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-											Assign Reviewer
-										</a>
-										<div class="dropdown-menu pd-20"
-										     aria-labelledby="dropdownMenuButton{{$work->id}}"
-										     onclick="event.stopPropagation();">
-											<h6 class="tx-gray-800 tx-uppercase dropdown-header">Assign To</h6>
-											<hr class="mg-t-5-force mg-b-5-force">
-											@foreach ($reviewers as $reviewer)
-												<a href="{{route('work.assign',['workid'=>$work->id,'userid'=>$reviewer->id])}}"
-												   class="row justify-content-between pd-b-5-force pd-t-5-force">
-													<div class="col-8">
-														{{ucfirst($reviewer->name)}}
-													</div>
-													<div class="col text-center">
-														@if ($reviewer->work_live_status === 'assigned')
-															<i class="fa fa-check-circle" style="color: #ff0000;"></i>
-														@elseif ($reviewer->work_live_status === 'in_progress')
-															<i class="fa fa-check-circle" style="color: #ffff00;"></i>
-														@elseif ($reviewer->work_live_status === 'completed')
-															<i class="fa fa-check-circle" style="color: #1a8e06;"></i>
-														@elseif ($reviewer->work_live_status === 'not_assigned')
-															<i class="fa fa-circle" style="color: #800080;"></i>
-														@endif
-													</div>
-												</a>
-											@endforeach
-										</div><!-- dropdown-menu -->
-									@else
-										{{ ucfirst($work->reviewerDetail->name) }}
-									@endif
-								</td>
+								@if(Auth::user()->user_role == 1)
+									<td>
+										@if (empty($work->reviewer_id))
+											<a href="javascript:void(0);" id="dropdownMenuButton{{$work->id}}"
+											   data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+												Assign Reviewer
+											</a>
+											<div class="dropdown-menu pd-20"
+											     aria-labelledby="dropdownMenuButton{{$work->id}}"
+											     onclick="event.stopPropagation();">
+												<h6 class="tx-gray-800 tx-uppercase dropdown-header">Assign To</h6>
+												<hr class="mg-t-5-force mg-b-5-force">
+												@foreach ($reviewers as $reviewer)
+													<a href="{{route('work.assign',['workid'=>$work->id,'userid'=>$reviewer->id])}}"
+													   class="row justify-content-between pd-b-5-force pd-t-5-force">
+														<div class="col-8">
+															{{ucfirst($reviewer->name)}}
+														</div>
+														<div class="col text-center">
+															@if ($reviewer->work_live_status === 'assigned')
+																<i class="fa fa-check-circle"
+																   style="color: #ff0000;"></i>
+															@elseif ($reviewer->work_live_status === 'in_progress')
+																<i class="fa fa-check-circle"
+																   style="color: #ffff00;"></i>
+															@elseif ($reviewer->work_live_status === 'completed')
+																<i class="fa fa-check-circle"
+																   style="color: #1a8e06;"></i>
+															@elseif ($reviewer->work_live_status === 'not_assigned')
+																<i class="fa fa-circle" style="color: #800080;"></i>
+															@endif
+														</div>
+													</a>
+												@endforeach
+											</div><!-- dropdown-menu -->
+										@else
+											{{ ucfirst($work->reviewerDetail->name) }}
+										@endif
+									</td>
+								@endif
 								<td>
 									<span class="square-8 bg-success mg-r-5 rounded-circle"></span>{{ ucfirst($work->status) }}
 								</td>

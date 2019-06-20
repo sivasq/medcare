@@ -15860,12 +15860,12 @@ textarea.parsley-success:focus {
 }
 
 .card-header.note-toolbar > .btn-group.note-insert, .card-header.note-toolbar > .btn-group.note-view {
-	margin-bottom: 0;
+	/*margin-bottom: 0;*/
 }
 
 @media (min-width: 480px) {
 	.card-header.note-toolbar > .btn-group.note-para, .card-header.note-toolbar > .btn-group.note-table {
-		margin-bottom: 0;
+		/*margin-bottom: 0;*/
 	}
 }
 
@@ -65503,4 +65503,42 @@ a.hover-white-8:hover, a.hover-white-8:focus {
 table thead tr th, table tbody tr td {
 	vertical-align: middle!important;
 	white-space: nowrap;
+}
+
+/*Toggle switch .custom colors*/
+.toggle-light.custom .toggle-on.active {
+	background-color: #1b84e7;
+}
+
+.toggle-light.custom .toggle-on.active + .toggle-blob {
+	border: 3px solid #1b84e7;
+}
+
+.toggle-light.custom .toggle-off.active {
+	background-color: #F49917;
+}
+
+.toggle-light.custom .toggle-on + .toggle-blob {
+	border: 3px solid #F49917;
+}
+
+
+.toggle-modern.custom .toggle-on.active {
+	background-color: #1b84e7;
+}
+
+.toggle-modern.custom .toggle-on.active + .toggle-blob {
+	border: 3px solid #1b84e7;
+}
+
+.toggle-modern.custom .toggle-off.active {
+	background-color: #F49917;
+}
+
+.toggle-modern.custom .toggle-on + .toggle-blob {
+	border: 3px solid #F49917;
+}
+
+.note-editor .modal-footer{
+	display:none;
 }

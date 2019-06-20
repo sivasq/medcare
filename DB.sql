@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `work_queues` (
   CONSTRAINT `work_queues_reviewer_id_foreign` FOREIGN KEY (`reviewer_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table medcare.work_queues: ~5 rows (approximately)
+-- Dumping data for table medcare.work_queues: ~4 rows (approximately)
 /*!40000 ALTER TABLE `work_queues` DISABLE KEYS */;
 REPLACE INTO `work_queues` (`id`, `client_id`, `e_script_id`, `reviewer_id`, `status`, `summary_report`, `chat_status`, `created_at`, `updated_at`) VALUES
 	(1, 1, NULL, NULL, 'unassigned', 'pending', NULL, NULL, NULL),
