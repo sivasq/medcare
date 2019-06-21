@@ -19,6 +19,7 @@ class CreateWorkQueuesTable extends Migration
 			$table->foreign('client_id')->references('id')->on('clients');
 			$table->unsignedBigInteger('reviewer_id')->nullable();
 			$table->foreign('reviewer_id')->references('id')->on('users');
+			$table->string('e_script_id')->nullable();
 			$table->string('status');
 			$table->string('summary_report')->nullable();
 			$table->string('chat_status')->nullable();

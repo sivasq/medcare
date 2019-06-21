@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table medcare.migrations: ~4 rows (approximately)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
@@ -54,7 +54,8 @@ REPLACE INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(6, '2014_10_12_100000_create_password_resets_table', 1),
 	(7, '2019_05_07_100025_create_clients_table', 2),
 	(8, '2019_05_07_102724_add_extra_columns_to_clients_table', 3),
-	(12, '2019_05_08_095628_create_work_queues_table', 4);
+	(12, '2019_05_08_095628_create_work_queues_table', 4),
+	(13, '2019_06_21_115345_create_summary_reports_table', 5);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Dumping structure for table medcare.password_resets
@@ -68,6 +69,23 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 -- Dumping data for table medcare.password_resets: ~0 rows (approximately)
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
+
+-- Dumping structure for table medcare.summary_reports
+CREATE TABLE IF NOT EXISTS `summary_reports` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `work_queue_id` bigint(20) unsigned NOT NULL,
+  `provider_report` longtext COLLATE utf8mb4_unicode_ci,
+  `patient_report` longtext COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `summary_reports_work_queue_id_foreign` (`work_queue_id`),
+  CONSTRAINT `summary_reports_work_queue_id_foreign` FOREIGN KEY (`work_queue_id`) REFERENCES `work_queues` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table medcare.summary_reports: ~0 rows (approximately)
+/*!40000 ALTER TABLE `summary_reports` DISABLE KEYS */;
+/*!40000 ALTER TABLE `summary_reports` ENABLE KEYS */;
 
 -- Dumping structure for table medcare.users
 CREATE TABLE IF NOT EXISTS `users` (

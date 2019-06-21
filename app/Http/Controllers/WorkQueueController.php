@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Summary_report;
 use App\User;
 use App\Work_queue;
 use Illuminate\Http\Request;
@@ -42,9 +43,11 @@ class WorkQueueController extends Controller
 	
 	}
 	
-	public function workprogress()
+	public function workprogress($workid)
 	{
-		return view('workprogress.work-progress');
+		$summaryReports = Summary_report::where('work_queue_id', $workid)->get();
+		return view('workprogress.work-progress', compact('summaryReports'));
+//		dd($summaryReports);
 	}
 	
 	public function assignworktouser($workid, $userid)

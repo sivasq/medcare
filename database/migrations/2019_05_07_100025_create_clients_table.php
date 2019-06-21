@@ -18,9 +18,11 @@ class CreateClientsTable extends Migration
 	        $table->string('first_name');
 	        $table->string('last_name')->nullable();
 	        $table->string('name');
+	        $table->string('dob');
+	        $table->string('gender');
 	        $table->string('email')->unique();
 	        $table->string('password');
-	        $table->string('script_id');
+	        $table->string('all_script_patient_id');
             $table->timestamps();
         });
     }

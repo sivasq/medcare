@@ -53,7 +53,7 @@
 						<tbody>
 						@foreach ($works as $work)
 							<tr>
-								<th scope="row"><a href="{{url('work/progress')}}">{{ $work->clientDetail->name }}</a>
+								<th scope="row"><a href="{{route('work.progress', ['workid'=>$work->id])}}">{{ $work->clientDetail->name }}</a>
 								</th>
 								<th scope="row">{{ $work->clientDetail->age }}</th>
 								<th scope="row">{{ $work->clientDetail->gender }}</th>
@@ -101,7 +101,7 @@
 									<span class="square-8 bg-success mg-r-5 rounded-circle"></span>{{ ucfirst($work->status) }}
 								</td>
 								<td>{{ ucfirst($work->summary_report) }}</td>
-								<td><a href="{{route('work.progress')}}">View Scripts</a></td>
+								<td><a href="{{route('work.progress', ['workid'=>$work->id])}}">View Scripts</a></td>
 								<td>{{ ucfirst($work->chat_status) }}</td>
 							</tr>
 						@endforeach
