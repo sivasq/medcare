@@ -32,9 +32,12 @@ Route::get('/work/{workid}/assign/{userid}', 'WorkQueueController@assignworktous
 Route::resource('work', 'WorkQueueController');
 
 
+//
+Route::get('/oauth', 'SummaryReportController@auth_test')->name('oauth');
 
+Route::post('/work/{workid}/store_provider_summary', 'SummaryReportController@store_provider_summary_details')->name('work.store_provider_summary');
 
-
+Route::post('/work/{workid}/store_patient_summary', 'SummaryReportController@store_patient_summary_details')->name('work.store_patient_summary');
 
 
 

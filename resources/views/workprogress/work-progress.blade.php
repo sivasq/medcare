@@ -2,6 +2,7 @@
 
 @section('headerscripts')
 	@parent
+	<meta name="_token" content="{{csrf_token()}}"/>
 	<link href="{{asset('assets/lib/jquery-toggles/css/toggles-full.css')}}" rel="stylesheet">
 	<link href="{{asset('assets/lib/summernote/summernote-bs4.css')}}" rel="stylesheet">
 @endsection
@@ -202,6 +203,7 @@
 							</div>
 						</div><!-- section-wrapper -->
 						
+						{{-- Chats --}}
 						<div class="section-wrapper pd-l-20-force pd-r-20-force mg-t-10-force">
 							<label class="section-title">Chats</label>
 							<div class="card" style="position: inherit;">
@@ -309,6 +311,7 @@
 							</div>
 						</div>
 						
+						{{-- Summary Reports --}}
 						<div class="section-wrapper pd-l-20-force pd-r-20-force mg-t-10-force pos-relative">
 							<label class="section-title">Summary Report</label>
 							
@@ -333,40 +336,46 @@
 									        class="btn btn-sm btn-outline-success btn-signin1 mg-t-25 mg-b-10 save-btn">
 										{{ __('Save Summary') }}
 									</button>
-								</div>
-								<div id="provider_note">
-									<p>Dr. Strange, pls review the following recommendations and provide your response
-										to
-										the recommendations fax to 800 555-5555</p>
 									
-									<h6>Recommendation 1</h6>
-									
-									<div>
-										<ul>
-											<li>Renal Dose Adjustment</li>
-											<li>Medication Duplication</li>
-										</ul>
+									<div class="alert-danger print-error-msg" style="display:block">
+										<ul></ul>
 									</div>
-									
-									<h6>Medication</h6>
-									<p>Venlafaxine 75mg XR, Take 1 tab by mouth before brekfast venlafaxine 225mg, take
-										1
-										tab by mouth before breakfast.</p>
-									
-									<h6>Assessment</h6>
-									<p>Patient is taking total dose of 300mg/dy, but maximum daily dose is 225 mg. This
-										medication also requires renal adjusment for CrCI 10-70 (Patient estimated Cr
-										CI(Cockcroft-Gault):50.5 mL/min) requires a reduction of total daily doe by
-										25-50%.</p>
-									
-									<h6>Plan</h6>
-									<p>Please consider reducing daily dose and renal adjusting this medicine.</p>
-									
-									<h6>References</h6>
-									<p>Lexicomp</p>
-									
-									<h6>Provider Response</h6>
-									<p>Provide Initials and (Yes/No) or explanation</p>
+								</div>
+								
+								<div id="provider_note">
+									{!! $summaryReports->provider_report !!}
+{{--									<p>Dr. Strange, pls review the following recommendations and provide your response--}}
+{{--										to--}}
+{{--										the recommendations fax to 800 555-5555</p>--}}
+{{--									--}}
+{{--									<h6>Recommendation 1</h6>--}}
+{{--									--}}
+{{--									<div>--}}
+{{--										<ul>--}}
+{{--											<li>Renal Dose Adjustment</li>--}}
+{{--											<li>Medication Duplication</li>--}}
+{{--										</ul>--}}
+{{--									</div>--}}
+{{--									--}}
+{{--									<h6>Medication</h6>--}}
+{{--									<p>Venlafaxine 75mg XR, Take 1 tab by mouth before brekfast venlafaxine 225mg, take--}}
+{{--										1--}}
+{{--										tab by mouth before breakfast.</p>--}}
+{{--									--}}
+{{--									<h6>Assessment</h6>--}}
+{{--									<p>Patient is taking total dose of 300mg/dy, but maximum daily dose is 225 mg. This--}}
+{{--										medication also requires renal adjusment for CrCI 10-70 (Patient estimated Cr--}}
+{{--										CI(Cockcroft-Gault):50.5 mL/min) requires a reduction of total daily doe by--}}
+{{--										25-50%.</p>--}}
+{{--									--}}
+{{--									<h6>Plan</h6>--}}
+{{--									<p>Please consider reducing daily dose and renal adjusting this medicine.</p>--}}
+{{--									--}}
+{{--									<h6>References</h6>--}}
+{{--									<p>Lexicomp</p>--}}
+{{--									--}}
+{{--									<h6>Provider Response</h6>--}}
+{{--									<p>Provide Initials and (Yes/No) or explanation</p>--}}
 								</div>
 							</div>
 							
@@ -387,15 +396,55 @@
 									        class="btn btn-sm btn-outline-success mg-t-25 mg-b-10 save-btn">
 										{{ __('Save Summary') }}
 									</button>
+									
+									<div class="alert-danger print-error-msg" style="display:block">
+										<ul></ul>
+									</div>
 								</div>
-								<div id="patient_note"></div>
+								
+								<div id="patient_note">
+									{!! $summaryReports->patient_report !!}
+{{--									<p>Dr. Strange, pls review the following recommendations and provide your response--}}
+{{--										to--}}
+{{--										the recommendations fax to 800 555-5555</p>--}}
+{{--									--}}
+{{--									<h6>Recommendation 1</h6>--}}
+{{--									--}}
+{{--									<div>--}}
+{{--										<ul>--}}
+{{--											<li>Renal Dose Adjustment</li>--}}
+{{--											<li>Medication Duplication</li>--}}
+{{--										</ul>--}}
+{{--									</div>--}}
+{{--									--}}
+{{--									<h6>Medication</h6>--}}
+{{--									<p>Venlafaxine 75mg XR, Take 1 tab by mouth before brekfast venlafaxine 225mg, take--}}
+{{--										1--}}
+{{--										tab by mouth before breakfast.</p>--}}
+{{--									--}}
+{{--									<h6>Assessment</h6>--}}
+{{--									<p>Patient is taking total dose of 300mg/dy, but maximum daily dose is 225 mg. This--}}
+{{--										medication also requires renal adjusment for CrCI 10-70 (Patient estimated Cr--}}
+{{--										CI(Cockcroft-Gault):50.5 mL/min) requires a reduction of total daily doe by--}}
+{{--										25-50%.</p>--}}
+{{--									--}}
+{{--									<h6>Plan</h6>--}}
+{{--									<p>Please consider reducing daily dose and renal adjusting this medicine.</p>--}}
+{{--									--}}
+{{--									<h6>References</h6>--}}
+{{--									<p>Lexicomp</p>--}}
+{{--									--}}
+{{--									<h6>Provider Response</h6>--}}
+{{--									<p>Provide Initials and (Yes/No) or explanation</p>--}}
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		
-		</div><!-- container -->
+		</div>
+	
+	</div><!-- container -->
 	</div><!-- slim-mainpanel -->
 @endsection
 
@@ -458,10 +507,37 @@
 
 		// Patient
 		var save_patient_summary = function () {
-			var markup = $('#patient_note').summernote('code');
-			$('#patient_note').summernote('destroy');
-			$('#patient_summary .save-btn').hide();
-			$('#patient_summary .edit-btn').show();
+			var markup = $.trim($('#patient_note').summernote('code'));
+
+			if (markup == '<p><br></p>') {
+				return false;
+			}
+
+			jQuery.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
+
+			jQuery.ajax({
+				url: "{{ route('work.store_patient_summary', ['workid' => $workid]) }}",
+				method: 'post',
+				data: {work_queue_id: "{{$workid}}", patient_report: markup},
+				success: function (data) {
+					if ('errors' in data) {
+						jQuery.each(data.errors, function (key, value) {
+							jQuery('#patient_summary .alert-danger').show();
+							jQuery('#patient_summary .alert-danger').append('<p>' + value + '</p>');
+						});
+					}
+
+					if ('success' in data) {
+						$('#patient_note').summernote('destroy');
+						$('#patient_summary .save-btn').hide();
+						$('#patient_summary .edit-btn').show();
+					}
+				}
+			});
 		};
 
 		var cancel_edit_patient_summary = function () {
@@ -499,10 +575,37 @@
 
 		//Provider
 		var save_provider_summary = function () {
-			var markup = $('#provider_note').summernote('code');
-			$('#provider_note').summernote('destroy');
-			$('#provider_summary .save-btn').hide();
-			$('#provider_summary .edit-btn').show();
+			var markup = $.trim($('#provider_note').summernote('code'));
+
+			if (markup == '<p><br></p>') {
+				return false;
+			}
+
+			jQuery.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			});
+
+			jQuery.ajax({
+				url: "{{ route('work.store_provider_summary', ['workid' => $workid]) }}",
+				method: 'post',
+				data: {work_queue_id: "{{$workid}}", provider_report: markup},
+				success: function (data) {
+					if ('errors' in data) {
+						jQuery.each(data.errors, function (key, value) {
+							jQuery('#provider_summary .alert-danger').show();
+							jQuery('#provider_summary .alert-danger').append('<p>' + value + '</p>');
+						});
+					}
+
+					if ('success' in data) {
+						$('#provider_note').summernote('destroy');
+						$('#provider_summary .save-btn').hide();
+						$('#provider_summary .edit-btn').show();
+					}
+				}
+			});
 		};
 
 		var cancel_edit_provider_summary = function () {
@@ -538,5 +641,12 @@
 			$('#provider_summary .edit-btn').hide();
 		};
 	
+		
+		
+		
+		
+		
+		
+		
 	</script>
 @endsection
