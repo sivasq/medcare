@@ -41,6 +41,12 @@ Route::post('/work/{workid}/store_patient_summary', 'SummaryReportController@sto
 
 
 
+Route::get('/chat', 'ChatsController@index');
+Route::get('messages', 'ChatsController@fetchMessages');
+Route::post('messages', 'ChatsController@sendMessage');
+
+
+
 
 
 

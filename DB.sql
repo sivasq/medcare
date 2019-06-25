@@ -39,13 +39,42 @@ REPLACE INTO `clients` (`id`, `all_script_patient_id`, `first_name`, `last_name`
 	(1, 'AL963258', 'Patient 1', '', 'Patient 1', 'male', '1990-05-25', 'siva@sqindia.net', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', NULL, NULL);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 
+-- Dumping structure for table medcare.messages
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table medcare.messages: ~0 rows (approximately)
+/*!40000 ALTER TABLE `messages` DISABLE KEYS */;
+REPLACE INTO `messages` (`id`, `user_id`, `message`, `created_at`, `updated_at`) VALUES
+	(1, 1, 'dsfds', '2019-06-25 11:50:17', '2019-06-25 11:50:17'),
+	(19, 5, 'fgfd', '2019-06-25 12:24:48', '2019-06-25 12:24:48'),
+	(20, 1, 'dsfds', '2019-06-25 12:28:20', '2019-06-25 12:28:20'),
+	(21, 1, 'g', '2019-06-25 12:28:42', '2019-06-25 12:28:42'),
+	(22, 1, 'fg', '2019-06-25 12:28:53', '2019-06-25 12:28:53'),
+	(23, 1, 'fg', '2019-06-25 12:30:12', '2019-06-25 12:30:12'),
+	(24, 1, 'fdg', '2019-06-25 12:30:55', '2019-06-25 12:30:55'),
+	(25, 1, 'h', '2019-06-25 12:31:12', '2019-06-25 12:31:12'),
+	(26, 1, 'fgfd', '2019-06-25 12:31:21', '2019-06-25 12:31:21'),
+	(27, 1, 'fgdfg', '2019-06-25 12:32:12', '2019-06-25 12:32:12'),
+	(28, 5, 'ooo', '2019-06-25 12:32:25', '2019-06-25 12:32:25'),
+	(29, 5, '767', '2019-06-25 12:32:50', '2019-06-25 12:32:50'),
+	(30, 5, '56546', '2019-06-25 12:33:34', '2019-06-25 12:33:34'),
+	(31, 1, 'ds', '2019-06-25 13:42:16', '2019-06-25 13:42:16');
+/*!40000 ALTER TABLE `messages` ENABLE KEYS */;
+
 -- Dumping structure for table medcare.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table medcare.migrations: ~4 rows (approximately)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
@@ -55,7 +84,8 @@ REPLACE INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(7, '2019_05_07_100025_create_clients_table', 2),
 	(8, '2019_05_07_102724_add_extra_columns_to_clients_table', 3),
 	(12, '2019_05_08_095628_create_work_queues_table', 4),
-	(13, '2019_06_21_115345_create_summary_reports_table', 5);
+	(13, '2019_06_21_115345_create_summary_reports_table', 5),
+	(14, '2019_06_25_104932_create_messages_table', 6);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Dumping structure for table medcare.password_resets
@@ -83,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `summary_reports` (
   CONSTRAINT `summary_reports_work_queue_id_foreign` FOREIGN KEY (`work_queue_id`) REFERENCES `work_queues` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table medcare.summary_reports: ~0 rows (approximately)
+-- Dumping data for table medcare.summary_reports: ~1 rows (approximately)
 /*!40000 ALTER TABLE `summary_reports` DISABLE KEYS */;
 REPLACE INTO `summary_reports` (`id`, `work_queue_id`, `provider_report`, `patient_report`, `created_at`, `updated_at`) VALUES
 	(2, 1, '&lt;p&gt;Mr. Dr. Strange, pls review the following recommendations and provide your response to the recommendations fax to 800 555-5555&lt;/p&gt; &lt;h6&gt;Recommendation 1&lt;/h6&gt; &lt;div&gt; &lt;ul&gt; &lt;li&gt;Renal Dose Adjustment&lt;/li&gt; &lt;li&gt;Medication Duplication&lt;/li&gt; &lt;/ul&gt; &lt;/div&gt; &lt;h6&gt;Medication&lt;/h6&gt; &lt;p&gt;Venlafaxine 75mg XR, Take 1 tab by mouth before brekfast venlafaxine 225mg, take 1 tab by mouth before breakfast.&lt;/p&gt; &lt;h6&gt;Assessment&lt;/h6&gt; &lt;p&gt;Patient is taking total dose of 300mg/dy, but maximum daily dose is 225 mg. This medication also requires renal adjusment for CrCI 10-70 (Patient estimated Cr CI(Cockcroft-Gault):50.5 mL/min) requires a reduction of total daily doe by 25-50%.&lt;/p&gt; &lt;h6&gt;Plan&lt;/h6&gt; &lt;p&gt;Please consider reducing daily dose and renal adjusting this medicine.&lt;/p&gt; &lt;h6&gt;References&lt;/h6&gt; &lt;p&gt;Lexicomp&lt;/p&gt; &lt;h6&gt;Provider Response&lt;/h6&gt; &lt;p&gt;Provide Initials and (Yes/No) or explanation&lt;/p&gt;', '&lt;p&gt;Dr. Strange, pls review the following recommendations and provide your response\n										to\n										the recommendations fax to 800 555-5555&lt;/p&gt;\n									\n									&lt;h6&gt;Recommendation 1&lt;/h6&gt;\n									\n									&lt;div&gt;\n										&lt;ul&gt;\n											&lt;li&gt;Renal Dose Adjustment&lt;/li&gt;\n											&lt;li&gt;Medication Duplication&lt;/li&gt;\n										&lt;/ul&gt;\n									&lt;/div&gt;\n									\n									&lt;h6&gt;Medication&lt;/h6&gt;\n									&lt;p&gt;Venlafaxine 75mg XR, Take 1 tab by mouth before brekfast venlafaxine 225mg, take\n										1\n										tab by mouth before breakfast.&lt;/p&gt;\n									\n									&lt;h6&gt;Assessment&lt;/h6&gt;\n									&lt;p&gt;Patient is taking total dose of 300mg/dy, but maximum daily dose is 225 mg. This\n										medication also requires renal adjusment for CrCI 10-70 (Patient estimated Cr\n										CI(Cockcroft-Gault):50.5 mL/min) requires a reduction of total daily doe by\n										25-50%.&lt;/p&gt;\n									\n									&lt;h6&gt;Plan&lt;/h6&gt;\n									&lt;p&gt;Please consider reducing daily dose and renal adjusting this medicine.&lt;/p&gt;\n									\n									&lt;h6&gt;References&lt;/h6&gt;\n									&lt;p&gt;Lexicomp&lt;/p&gt;\n									\n									&lt;h6&gt;Provider Response&lt;/h6&gt;\n									&lt;p&gt;Provide Initials and (Yes/No) or explanation&lt;/p&gt;', '2019-06-24 08:35:50', '2019-06-24 10:35:56');
