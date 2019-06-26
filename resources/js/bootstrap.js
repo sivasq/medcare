@@ -54,5 +54,6 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    encrypted: true
+    encrypted: true,
+    authEndpoint: window.base_url +'/broadcasting/auth',
 });

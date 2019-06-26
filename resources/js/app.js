@@ -51,7 +51,7 @@ const app = new Vue({
 
 	methods: {
 		fetchMessages() {
-			axios.get(window.base_url+'/messages').then(response => {
+			axios.get(window.base_url + '/messages').then(response => {
 				this.messages = response.data;
 			});
 		},
@@ -59,7 +59,7 @@ const app = new Vue({
 		addMessage(message) {
 			this.messages.push(message);
 
-			axios.post(window.base_url+'/messages', message).then(response => {
+			axios.post(window.base_url + '/messages', message).then(response => {
 				console.log(response.data);
 			});
 		}
