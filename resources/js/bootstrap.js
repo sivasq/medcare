@@ -33,7 +33,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 let token = document.head.querySelector('meta[name="csrf-token"]');
 window.base_url = document.head.querySelector('meta[name="base-url"]').content;
 
-console.log(window.base_url);
+// console.log(window.base_url);
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {

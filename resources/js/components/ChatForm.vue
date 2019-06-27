@@ -13,7 +13,7 @@
 <script>
 	export default {
 		// name: "ChatForm.vue",
-		props: ['user'],
+		props: ['work'],
 
 		data() {
 			return {
@@ -24,7 +24,7 @@
 		methods: {
 			sendMessage() {
 				this.$emit('messagesent', {
-					user: this.user,
+					workid: this.work,
 					message: this.newMessage
 				});
 

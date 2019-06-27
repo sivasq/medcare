@@ -6,6 +6,7 @@ use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Events\MessageSent;
+use Illuminate\Support\Facades\Log;
 
 class ChatsController extends Controller
 {
@@ -19,9 +20,10 @@ class ChatsController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index($workid)
 	{
-		return view('chats/chat');
+//		$workid = $work_id;
+		return view('chats/chat', compact('workid'));
 	}
 	
 	/**
@@ -29,9 +31,9 @@ class ChatsController extends Controller
 	 *
 	 * @return Message
 	 */
-	public function fetchMessages()
+	public function fetchMessages($workid)
 	{
-		return Message::with('user')->get();
+		return Message::with('user')->where('workid', $workid)->get();
 	}
 	
 	/**
@@ -44,11 +46,16 @@ class ChatsController extends Controller
 	{
 		$user = Auth::user();
 		
-		$message = $user->messages()->create([
-			'message' => $request->input('message')
-		]);
+//		$out = new \Symfony\Component\Console\Output\ConsoleOutput();
+//		$out->writeln(print_r($request->all(), true));
+//		Log::info($request->input('workid'));
 		
-		broadcast(new MessageSent($user, $message))->toOthers();
+		$message = $user->messages()->create([
+			'message' => $request->input('message'),
+			'workid' => $request->input('workid')
+		]);
+		$work = $request->input('workid');
+		broadcast(new MessageSent($work, $user, $message));
 		return ['status' => 'Message Sent!'];
 	}
 }

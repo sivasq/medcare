@@ -29,32 +29,36 @@ Vue.component('chat-form', require('./components/ChatForm.vue').default);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-console.log(window.base_url);
+
 const app = new Vue({
 	el: '#app',
-
+	props: ["work"],
 	data: {
-		messages: []
+		messages: [],
 	},
 
 	created() {
-		this.fetchMessages();
-
-		Echo.private('chat')
-			.listen('MessageSent', (e) => {
-				this.messages.push({
-					message: e.message.message,
-					user: e.user
-				});
-			});
+		// this.getWorkQueues();
+		// console.log(this.work);
+		// this.fetchMessages(this.work);
+		//
+		// Echo.private('chat.2')
+		// 	.listen('MessageSent', (e) => {
+		// 		console.log(e);
+		// 		this.messages.push({
+		// 			message: e.message.message,
+		// 			user: e.user
+		// 		});
+		// 	});
 	},
 
 	methods: {
-		fetchMessages() {
-			axios.get(window.base_url + '/messages').then(response => {
-				this.messages = response.data;
-			});
-		},
+		// fetchMessages(workid) {
+		// 	axios.get(window.base_url + '/fetchmessages' + workid).then(response => {
+		// 		this.messages = response.data;
+		// 		// console.log(this.messages);
+		// 	});
+		// },
 
 		addMessage(message) {
 			this.messages.push(message);

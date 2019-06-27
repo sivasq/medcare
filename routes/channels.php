@@ -16,5 +16,11 @@
 //});
 
 Broadcast::channel('chat', function ($user) {
-	return Auth::check();
+//	return Auth::check();
+	return true;
+});
+
+Broadcast::channel('chat.2', function ($user) {
+//	return Auth::check();
+	return true;
 });

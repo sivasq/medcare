@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               8.0.15 - MySQL Community Server - GPL
 -- Server OS:                    Win64
--- HeidiSQL Version:             10.2.0.5599
+-- HeidiSQL Version:             10.2.0.5608
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -46,26 +46,48 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `workid` mediumint(9) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table medcare.messages: ~0 rows (approximately)
+-- Dumping data for table medcare.messages: ~14 rows (approximately)
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-REPLACE INTO `messages` (`id`, `user_id`, `message`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'dsfds', '2019-06-25 11:50:17', '2019-06-25 11:50:17'),
-	(19, 5, 'fgfd', '2019-06-25 12:24:48', '2019-06-25 12:24:48'),
-	(20, 1, 'dsfds', '2019-06-25 12:28:20', '2019-06-25 12:28:20'),
-	(21, 1, 'g', '2019-06-25 12:28:42', '2019-06-25 12:28:42'),
-	(22, 1, 'fg', '2019-06-25 12:28:53', '2019-06-25 12:28:53'),
-	(23, 1, 'fg', '2019-06-25 12:30:12', '2019-06-25 12:30:12'),
-	(24, 1, 'fdg', '2019-06-25 12:30:55', '2019-06-25 12:30:55'),
-	(25, 1, 'h', '2019-06-25 12:31:12', '2019-06-25 12:31:12'),
-	(26, 1, 'fgfd', '2019-06-25 12:31:21', '2019-06-25 12:31:21'),
-	(27, 1, 'fgdfg', '2019-06-25 12:32:12', '2019-06-25 12:32:12'),
-	(28, 5, 'ooo', '2019-06-25 12:32:25', '2019-06-25 12:32:25'),
-	(29, 5, '767', '2019-06-25 12:32:50', '2019-06-25 12:32:50'),
-	(30, 5, '56546', '2019-06-25 12:33:34', '2019-06-25 12:33:34'),
-	(31, 1, 'ds', '2019-06-25 13:42:16', '2019-06-25 13:42:16');
+REPLACE INTO `messages` (`id`, `user_id`, `message`, `created_at`, `updated_at`, `workid`) VALUES
+	(1, 1, 'dsfds', '2019-06-25 11:50:17', '2019-06-25 11:50:17', 1),
+	(19, 5, 'fgfd', '2019-06-25 12:24:48', '2019-06-25 12:24:48', 2),
+	(20, 1, 'dsfds', '2019-06-25 12:28:20', '2019-06-25 12:28:20', 3),
+	(21, 1, 'g', '2019-06-25 12:28:42', '2019-06-25 12:28:42', 4),
+	(22, 1, 'fg', '2019-06-25 12:28:53', '2019-06-25 12:28:53', 1),
+	(23, 1, 'fg', '2019-06-25 12:30:12', '2019-06-25 12:30:12', 2),
+	(24, 1, 'fdg', '2019-06-25 12:30:55', '2019-06-25 12:30:55', 3),
+	(25, 1, 'h', '2019-06-25 12:31:12', '2019-06-25 12:31:12', 4),
+	(26, 1, 'fgfd', '2019-06-25 12:31:21', '2019-06-25 12:31:21', 1),
+	(27, 1, 'fgdfg', '2019-06-25 12:32:12', '2019-06-25 12:32:12', 2),
+	(28, 5, 'ooo', '2019-06-25 12:32:25', '2019-06-25 12:32:25', 3),
+	(29, 5, '767', '2019-06-25 12:32:50', '2019-06-25 12:32:50', 4),
+	(30, 5, '56546', '2019-06-25 12:33:34', '2019-06-25 12:33:34', 1),
+	(31, 1, 'ds', '2019-06-25 13:42:16', '2019-06-25 13:42:16', 2),
+	(32, 1, 'dfds', '2019-06-27 10:31:19', '2019-06-27 10:31:19', 3),
+	(33, 1, 'yyy', '2019-06-27 10:32:52', '2019-06-27 10:32:52', 4),
+	(34, 1, 'fdgd', '2019-06-27 11:50:58', '2019-06-27 11:50:58', 2),
+	(40, 1, 'fgdgd', '2019-06-27 12:02:14', '2019-06-27 12:02:14', 2),
+	(41, 2, 'gfdg', '2019-06-27 12:04:09', '2019-06-27 12:04:09', 2),
+	(42, 1, '232', '2019-06-27 12:06:39', '2019-06-27 12:06:39', 2),
+	(43, 1, '11', '2019-06-27 12:09:06', '2019-06-27 12:09:06', 2),
+	(44, 1, 's', '2019-06-27 12:12:00', '2019-06-27 12:12:00', 2),
+	(45, 2, 'fdsf', '2019-06-27 12:16:35', '2019-06-27 12:16:35', 2),
+	(46, 1, '2', '2019-06-27 12:34:08', '2019-06-27 12:34:08', 2),
+	(47, 5, '3', '2019-06-27 12:34:35', '2019-06-27 12:34:35', 2),
+	(48, 1, '4', '2019-06-27 12:35:51', '2019-06-27 12:35:51', 2),
+	(49, 5, 'w', '2019-06-27 12:36:06', '2019-06-27 12:36:06', 2),
+	(50, 5, 'd', '2019-06-27 12:47:01', '2019-06-27 12:47:01', 2),
+	(51, 5, 'r', '2019-06-27 12:49:47', '2019-06-27 12:49:47', 2),
+	(52, 5, 'w', '2019-06-27 12:57:16', '2019-06-27 12:57:16', 2),
+	(53, 5, 'x', '2019-06-27 13:00:06', '2019-06-27 13:00:06', 2),
+	(54, 5, 'y', '2019-06-27 13:00:32', '2019-06-27 13:00:32', 2),
+	(55, 5, 'sa', '2019-06-27 13:00:53', '2019-06-27 13:00:53', 2),
+	(56, 1, 'u', '2019-06-27 13:04:43', '2019-06-27 13:04:43', 2),
+	(57, 5, 'q', '2019-06-27 13:04:49', '2019-06-27 13:04:49', 2);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 
 -- Dumping structure for table medcare.migrations
@@ -76,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table medcare.migrations: ~4 rows (approximately)
+-- Dumping data for table medcare.migrations: ~5 rows (approximately)
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 REPLACE INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(5, '2014_10_12_000000_create_users_table', 1),
@@ -145,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table medcare.users: ~5 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 REPLACE INTO `users` (`id`, `first_name`, `last_name`, `name`, `email`, `id_number`, `password`, `start_date`, `end_date`, `account_type`, `user_role`, `work_live_status`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'user1', NULL, 'siva', 'siva@sqindia.net', 'siva ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-05-01', '2019-10-31', 'admin', '1', NULL, '2019-06-18 11:45:12', '41DOsvoBSlQZ6MZgyhpyKJe4E9qNvf8uANPLWluKSqTjgTXe7XiQzlUMaXEr', NULL, '2019-06-18 11:45:12'),
+	(1, 'user1', NULL, 'siva', 'siva@sqindia.net', 'siva ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-05-01', '2019-10-31', 'admin', '1', NULL, '2019-06-18 11:45:12', 'k6SiGSqJPbYOISmen0wXKEMU5EvWutwuvmWjj44ZoByiEtdB8d1aPi8UtdAV', NULL, '2019-06-18 11:45:12'),
 	(2, 'user2', 'lname', 'user2 lname', 'user2@sqindia.net', 'user2 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '06/25/2019', 'consultant', '2', 'assigned', '2019-06-19 09:36:56', NULL, NULL, '2019-06-19 11:52:59'),
 	(3, 'user3', NULL, 'user3', 'user3@sqindia.net', 'user3 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', 'consultant', '2', 'assigned', '2019-06-19 14:59:36', NULL, NULL, '2019-06-19 11:51:09'),
 	(4, 'user4', NULL, 'user4', 'user4@sqindia.net', 'user4 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', 'consultant', '2', 'assigned', '2019-06-19 14:59:39', NULL, NULL, '2019-06-19 11:54:54'),

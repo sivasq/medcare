@@ -53,16 +53,11 @@ class WorkQueueController extends Controller
 	
 	public function assignworktouser($workid, $userid)
 	{
-		Work_queue::find($workid)
-			->update(['status' => 'assigned', 'reviewer_id' => $userid]);
+		Work_queue::find($workid)->update(['status' => 'assigned', 'reviewer_id' => $userid]);
 		
-		User::where('id', $userid)
-			->where('work_live_status', '!=', 'assigned')
-			->update(['work_live_status' => 'assigned']);
+		User::where('id', $userid)->where('work_live_status', '!=', 'assigned')->update(['work_live_status' => 'assigned']);
 		
-		return redirect()
-			->back()
-			->with('success', 'Work Successfully Assigned!');
+		return redirect()->back()->with('success', 'Work Successfully Assigned!');
 	}
 	
 	/**
@@ -129,5 +124,10 @@ class WorkQueueController extends Controller
 	public function destroy(work_queue $work_queue)
 	{
 		//
+	}
+	
+	public function get_works($workid)
+	{
+		return Work_queue::where('workid', $workid)->get();;
 	}
 }

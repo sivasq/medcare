@@ -1711,7 +1711,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   // name: "ChatForm.vue",
-  props: ['user'],
+  props: ['work'],
   data: function data() {
     return {
       newMessage: ''
@@ -1720,7 +1720,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     sendMessage: function sendMessage() {
       this.$emit('messagesent', {
-        user: this.user,
+        workid: this.work,
         message: this.newMessage
       });
       this.newMessage = '';
@@ -1758,9 +1758,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // name: "ChatMessages.vue",
-  props: ['messages']
+  props: ['work'],
+  data: function data() {
+    return {
+      messages: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    console.log(this.work);
+    this.fetchMessages(this.work);
+    Echo["private"]("chat.".concat(this.work)).listen('MessageSent', function (e) {
+      console.log(e);
+
+      _this.messages.push({
+        message: e.message.message,
+        user: e.user
+      });
+
+      console.log(_this.messages);
+    });
+  },
+  methods: {
+    fetchMessages: function fetchMessages(workid) {
+      var _this2 = this;
+
+      axios.get(window.base_url + '/fetchmessages/' + workid).then(function (response) {
+        _this2.messages = response.data; // console.log(this.messages);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -47308,22 +47349,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "ul",
-    { staticClass: "chat" },
-    _vm._l(_vm.messages, function(message) {
-      return _c("li", { staticClass: "left clearfix" }, [
-        _c("div", { staticClass: "chat-body clearfix" }, [
-          _vm._m(0, true),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "card card-default" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("\n\t\t\t\t\tPrivate Chat App\n\t\t\t\t")
+          ]),
           _vm._v(" "),
-          _c("p", [
-            _vm._v("\n\t\t\t\t\t" + _vm._s(message.message) + "\n\t\t\t\t")
-          ])
+          _c(
+            "ul",
+            { staticClass: "chat" },
+            _vm._l(_vm.messages, function(message) {
+              return _c("li", { staticClass: "left clearfix" }, [
+                _c("div", { staticClass: "chat-body clearfix" }, [
+                  _vm._m(0, true),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      "\n\t\t\t\t\t\t\t\t" +
+                        _vm._s(message.message) +
+                        "\n\t\t\t\t\t\t\t"
+                    )
+                  ])
+                ])
+              ])
+            }),
+            0
+          )
         ])
       ])
-    }),
-    0
-  )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -47332,7 +47389,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header" }, [
       _c("strong", { staticClass: "primary-font" }, [
-        _vm._v("\n\t\t\t\t\t\tname\n\t\t\t\t\t")
+        _vm._v("\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t")
       ]),
       _vm._v(" "),
       _c("a", { attrs: { href: "/" } })
@@ -59562,31 +59619,32 @@ Vue.component('chat-form', __webpack_require__(/*! ./components/ChatForm.vue */ 
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-console.log(window.base_url);
 var app = new Vue({
   el: '#app',
+  props: ["work"],
   data: {
     messages: []
   },
-  created: function created() {
-    var _this = this;
-
-    this.fetchMessages();
-    Echo["private"]('chat').listen('MessageSent', function (e) {
-      _this.messages.push({
-        message: e.message.message,
-        user: e.user
-      });
-    });
+  created: function created() {// this.getWorkQueues();
+    // console.log(this.work);
+    // this.fetchMessages(this.work);
+    //
+    // Echo.private('chat.2')
+    // 	.listen('MessageSent', (e) => {
+    // 		console.log(e);
+    // 		this.messages.push({
+    // 			message: e.message.message,
+    // 			user: e.user
+    // 		});
+    // 	});
   },
   methods: {
-    fetchMessages: function fetchMessages() {
-      var _this2 = this;
-
-      axios.get(window.base_url + '/messages').then(function (response) {
-        _this2.messages = response.data;
-      });
-    },
+    // fetchMessages(workid) {
+    // 	axios.get(window.base_url + '/fetchmessages' + workid).then(response => {
+    // 		this.messages = response.data;
+    // 		// console.log(this.messages);
+    // 	});
+    // },
     addMessage: function addMessage(message) {
       this.messages.push(message);
       axios.post(window.base_url + '/messages', message).then(function (response) {
@@ -59637,8 +59695,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 var token = document.head.querySelector('meta[name="csrf-token"]');
-window.base_url = document.head.querySelector('meta[name="base-url"]').content;
-console.log(window.base_url);
+window.base_url = document.head.querySelector('meta[name="base-url"]').content; // console.log(window.base_url);
 
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
@@ -59658,7 +59715,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "dbf8f9b28342482cc225",
   cluster: "mt1",
-  encrypted: true
+  encrypted: true,
+  authEndpoint: window.base_url + '/broadcasting/auth'
 });
 
 /***/ }),

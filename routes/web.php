@@ -40,9 +40,13 @@ Route::post('/work/{workid}/store_provider_summary', 'SummaryReportController@st
 Route::post('/work/{workid}/store_patient_summary', 'SummaryReportController@store_patient_summary_details')->name('work.store_patient_summary');
 
 
+//For Chats
+Route::get('/get_works/{workid}', 'WorkQueueController@get_works');
 
-Route::get('/chat', 'ChatsController@index');
-Route::get('messages', 'ChatsController@fetchMessages');
+
+
+Route::get('/chat/{workid}', 'ChatsController@index');
+Route::get('fetchmessages/{workid}', 'ChatsController@fetchMessages');
 Route::post('messages', 'ChatsController@sendMessage');
 
 
