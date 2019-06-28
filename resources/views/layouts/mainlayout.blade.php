@@ -16,6 +16,5 @@
 	@include('partials.footer-scripts')
 @endif
 
-
 </body>
 </html>

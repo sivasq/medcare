@@ -15,12 +15,15 @@
 //    return (int) $user->id === (int) $id;
 //});
 
+use App\Work_queue;
+
 Broadcast::channel('chat', function ($user) {
 //	return Auth::check();
 	return true;
 });
 
-Broadcast::channel('chat.2', function ($user) {
+Broadcast::channel('chat.{work}', function ($user, $work) {
 //	return Auth::check();
+//	Log::info(print_r($work->toArray(), true));
 	return true;
 });

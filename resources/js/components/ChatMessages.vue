@@ -1,37 +1,27 @@
 <template>
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-md-3">
-				<div class="card card-default">
-					<div class="card-header">
-						Private Chat App
-					</div>
-					<ul class="chat">
-						<li class="left clearfix" v-for="message in messages">
-							<div class="chat-body clearfix">
-								<div class="header">
-									<strong class="primary-font">
-										<!--{{ message.user.name }}-->
-										name
-									</strong>
-									<a href="/"></a>
-								</div>
-								<p>
-									{{ message.message }}
-								</p>
-							</div>
-						</li>
-					</ul>
+	<div class="media-list" v-chat-scroll>
+		<div class="media" v-for="message in messages" :key="message.id">
+			<img v-if="message.user.id !== auth.id" src="http://via.placeholder.com/500x500"
+			     class="wd-50 rounded-circle"
+			     alt="">
+			<div class="media-body" :class="{'reverse':message.user.id == auth.id}">
+				<div class="msg">
+					<p>{{ message.message }}</p>
 				</div>
+				<!--<div class="msg">-->
+				<!--<p>Are you ready for our party tonight?</p>-->
+				<!--</div>-->
 			</div>
-		</div>
-	</div>
+			<img v-if="message.user.id == auth.id" src="http://via.placeholder.com/500x500" class="wd-50 rounded-circle"
+			     alt="">
+		</div><!-- media -->
+	</div><!-- media-list -->
 </template>
 
 <script>
 	export default {
 		// name: "ChatMessages.vue",
-		props: ['work'],
+		props: ['work', 'auth'],
 		data() {
 			return {
 				messages: [],
@@ -39,6 +29,7 @@
 		},
 		created() {
 			console.log(this.work);
+			console.log(this.auth);
 			this.fetchMessages(this.work);
 
 			Echo.private(`chat.${this.work}`)

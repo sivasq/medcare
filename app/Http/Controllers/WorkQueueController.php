@@ -45,10 +45,14 @@ class WorkQueueController extends Controller
 	
 	public function workprogress($workid)
 	{
-		$summaryReports = Summary_report::where('work_queue_id', $workid)->first();
+		$work_details = Work_queue::find($workid);
+//		dd($work_details->summary_reports->toArray());
 		
-		return view('workprogress.work-progress', compact('summaryReports', 'workid'));
-//		dd($summaryReports);
+		return view('workprogress.work-progress', compact('work_details', 'workid'));
+		
+//		$summaryReports = Summary_report::where('work_queue_id', $workid)->first();
+//		return view('workprogress.work-progress', compact('summaryReports', 'workid'));
+//		dd($summaryReports->toArray);
 	}
 	
 	public function assignworktouser($workid, $userid)

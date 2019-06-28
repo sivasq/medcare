@@ -2,9 +2,15 @@
 
 @section('headerscripts')
 	@parent
+	<!-- CSRF Token -->
 	<meta name="_token" content="{{csrf_token()}}"/>
+	<meta name="base-url" content="{{ url('/') }}">
+	
 	<link href="{{asset('assets/lib/jquery-toggles/css/toggles-full.css')}}" rel="stylesheet">
 	<link href="{{asset('assets/lib/summernote/summernote-bs4.css')}}" rel="stylesheet">
+	
+	<!-- Styles -->
+	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -47,8 +53,9 @@
 								<div class="media align-items-center">
 									<img class="wd-75-force" src="http://via.placeholder.com/100x100" alt="">
 									<div class="media-body mg-l-20-force">
-										<h3 class="card-profile-name">Selina Kyle</h3>
-										<p class="card-profile-position">Female, 57</p>
+										<h3 class="card-profile-name">{{$work_details->clientDetail->name}}</h3>
+										<p class="card-profile-position">{{$work_details->clientDetail->gender}}
+											, {{$work_details->clientDetail->age}}</p>
 									</div><!-- media-body -->
 								</div><!-- media -->
 								
@@ -68,6 +75,7 @@
 							</div><!-- card-body -->
 						</div><!-- card profile-->
 						
+						<!-- E-Scripts -->
 						<div class="section-wrapper pd-l-20-force pd-r-20-force">
 							<label class="section-title">E-Scripts</label>
 							<div class="card card-table">
@@ -201,117 +209,34 @@
 									</table>
 								</div><!-- table-responsive -->
 							</div>
-						</div><!-- section-wrapper -->
+						</div>
 						
-						{{-- Chats --}}
-						<div class="section-wrapper pd-l-20-force pd-r-20-force mg-t-10-force">
+						<!-- Chats -->
+						<div id="app" class="section-wrapper pd-l-20-force pd-r-20-force mg-t-10-force">
 							<label class="section-title">Chats</label>
 							<div class="card" style="position: inherit;">
 								<div class="message-header" style="position: inherit;">
-									<a href="" class="message-back"><i class="fa fa-angle-left"></i></a>
 									<div class="media">
 										<img src="http://via.placeholder.com/500x500" alt="">
 										<div class="media-body">
-											<h6>Joyce Chua</h6>
-											<p>Last seen: 2 hours ago</p>
+											<h6>{{$work_details->clientDetail->name}}</h6>
+											{{--											<p>Last seen: 2 hours ago</p>--}}
 										</div><!-- media-body -->
 									</div><!-- media -->
-									<div class="message-option">
-										<div class="d-none d-sm-flex">
-											<a href=""><i class="icon ion-ios-telephone-outline"></i></a>
-											<a href=""><i class="icon ion-ios-videocam-outline"></i></a>
-											<a href=""><i class="icon ion-ios-gear-outline"></i></a>
-											<a href=""><i class="icon ion-ios-information-outline"></i></a>
-										</div>
-										<div class="d-sm-none">
-											<a href=""><i class="icon ion-more"></i></a>
-										</div>
-									</div>
 								</div><!-- message-header -->
+								
 								<div class="message-body ht-300" style="position: inherit;">
-									<div class="media-list">
-										<div class="media">
-											<img src="http://via.placeholder.com/500x500" alt="">
-											<div class="media-body">
-												<div class="msg">
-													<p>Hi, there?</p>
-												</div>
-												<div class="msg">
-													<p>Are you ready for our party tonight?</p>
-												</div>
-											</div><!-- media-body -->
-										</div><!-- media -->
-										<div class="media">
-											<div class="media-body reverse">
-												<div class="msg">
-													<p>So this is where you plan to do it?</p>
-												</div>
-											</div><!-- media-body -->
-											<img src="http://via.placeholder.com/500x500"
-											     class="wd-50 rounded-circle" alt="">
-										</div><!-- media -->
-										<div class="media">
-											<img src="http://via.placeholder.com/500x500" alt="">
-											<div class="media-body">
-												<div class="msg">
-													<p>As good a place as any.</p>
-												</div>
-											</div><!-- media-body -->
-										</div><!-- media -->
-										<div class="media">
-											<div class="media-body reverse">
-												<div class="msg">
-													<p>At least have the balls to call this what it is: murder. You
-														really believe if
-														you walk back onto that farm alone, no me, no
-														Randall... </p>
-												</div>
-												<div class="msg">
-													<p>You really believe they're gonna buy whatever bullshit story
-														you cook up?</p>
-												</div>
-											</div><!-- media-body -->
-											<img src="http://via.placeholder.com/500x500"
-											     class="wd-50 rounded-circle" alt="">
-										</div><!-- media -->
-										<div class="media">
-											<img src="http://via.placeholder.com/500x500" alt="">
-											<div class="media-body">
-												<div class="msg">
-													<p>That's just it, it ain't no story. I saw that prisoner shoot
-														you down. I ran
-														after him, I snapped his neck. It ain't gonna be easy, but
-														Lori and Carl,
-														they'll get over you. They done it before. They just gonna
-														have to.</p>
-												</div>
-											</div><!-- media-body -->
-										</div><!-- media -->
-									</div><!-- media-list -->
-								</div><!-- message-body -->
+									<chat-messages :messages="messages" :work="{{$work_details->id}}"
+									               :auth="{{auth()->user()}}"></chat-messages>
+								</div>
+								
 								<div class="message-footer" style="position: inherit;">
-									<div class="row row-sm">
-										<div class="col-9 col-sm-8 col-xl-9">
-											<input type="text" class="form-control"
-											       placeholder="Type something here...">
-										</div><!-- col-8 -->
-										<div class="col-3 col-sm-4 col-xl-3 tx-right">
-											<div class="d-none d-sm-block">
-												<a href=""><i class="icon ion-happy-outline"></i></a>
-												<a href=""><i class="icon ion-ios-game-controller-b-outline"></i></a>
-												<a href=""><i class="icon ion-ios-camera-outline"></i></a>
-												<a href=""><i class="icon ion-ios-mic-outline"></i></a>
-											</div>
-											<div class="d-sm-none">
-												<a href=""><i class="icon ion-more"></i></a>
-											</div>
-										</div><!-- col-4 -->
-									</div><!-- row -->
+									<chat-form v-on:messagesent="addMessage" :work="{{$work_details->id}}"></chat-form>
 								</div><!-- message-footer -->
 							</div>
 						</div>
 						
-						{{-- Summary Reports --}}
+						<!-- Summary Reports -->
 						<div class="section-wrapper pd-l-20-force pd-r-20-force mg-t-10-force pos-relative">
 							<label class="section-title">Summary Report</label>
 							
@@ -322,10 +247,26 @@
 							<div class="mg-t-25 pos-relative" id="provider_summary">
 								<h6 class="slim-card-title">Note to Provider / Prescriber</h6>
 								<div class="tx-center">
-									<button onclick="edit_provider_summary()"
-									        class="btn btn-sm btn-outline-primary btn-signin1 mg-t-25 mg-b-10 edit-btn">
-										{{ __('Create / Edit Summary') }}
-									</button>
+									@if(is_null($work_details->summary_reports))
+										<button onclick="edit_provider_summary()"
+										        class="btn btn-sm btn-outline-primary btn-signin1 mg-t-25 mg-b-10 edit-btn">
+											{{ __('Create Summary') }}
+										</button>
+									@endif
+									
+									@if(!is_null($work_details->summary_reports))
+										@if($work_details->summary_reports->provider_report)
+											<button onclick="edit_provider_summary()"
+											        class="btn btn-sm btn-outline-primary btn-signin1 mg-t-25 mg-b-10 edit-btn">
+												{{ __('Edit Summary') }}
+											</button>
+										@else
+											<button onclick="edit_provider_summary()"
+											        class="btn btn-sm btn-outline-primary btn-signin1 mg-t-25 mg-b-10 edit-btn">
+												{{ __('Create Summary') }}
+											</button>
+										@endif
+									@endif
 									
 									<button onclick="cancel_edit_provider_summary()"
 									        class="btn btn-sm btn-outline-danger btn-signin1 mg-t-25 mg-b-10 save-btn">
@@ -343,49 +284,35 @@
 								</div>
 								
 								<div id="provider_note">
-									{!! $summaryReports->provider_report !!}
-{{--									<p>Dr. Strange, pls review the following recommendations and provide your response--}}
-{{--										to--}}
-{{--										the recommendations fax to 800 555-5555</p>--}}
-{{--									--}}
-{{--									<h6>Recommendation 1</h6>--}}
-{{--									--}}
-{{--									<div>--}}
-{{--										<ul>--}}
-{{--											<li>Renal Dose Adjustment</li>--}}
-{{--											<li>Medication Duplication</li>--}}
-{{--										</ul>--}}
-{{--									</div>--}}
-{{--									--}}
-{{--									<h6>Medication</h6>--}}
-{{--									<p>Venlafaxine 75mg XR, Take 1 tab by mouth before brekfast venlafaxine 225mg, take--}}
-{{--										1--}}
-{{--										tab by mouth before breakfast.</p>--}}
-{{--									--}}
-{{--									<h6>Assessment</h6>--}}
-{{--									<p>Patient is taking total dose of 300mg/dy, but maximum daily dose is 225 mg. This--}}
-{{--										medication also requires renal adjusment for CrCI 10-70 (Patient estimated Cr--}}
-{{--										CI(Cockcroft-Gault):50.5 mL/min) requires a reduction of total daily doe by--}}
-{{--										25-50%.</p>--}}
-{{--									--}}
-{{--									<h6>Plan</h6>--}}
-{{--									<p>Please consider reducing daily dose and renal adjusting this medicine.</p>--}}
-{{--									--}}
-{{--									<h6>References</h6>--}}
-{{--									<p>Lexicomp</p>--}}
-{{--									--}}
-{{--									<h6>Provider Response</h6>--}}
-{{--									<p>Provide Initials and (Yes/No) or explanation</p>--}}
+									@if(!is_null($work_details->summary_reports))
+										{!! $work_details->summary_reports->provider_report !!}
+									@endif
 								</div>
 							</div>
 							
 							<div class="mg-t-25 pos-relative" id="patient_summary">
 								<h6 class="slim-card-title">Note to Patient</h6>
 								<div class="tx-center">
-									<button onclick="edit_patient_summary()"
-									        class="btn btn-sm btn-outline-primary mg-t-25 mg-b-10 edit-btn">
-										{{ __('Create / Edit Summary') }}
-									</button>
+									@if(is_null($work_details->summary_reports))
+										<button onclick="edit_patient_summary()"
+										        class="btn btn-sm btn-outline-primary btn-signin1 mg-t-25 mg-b-10 edit-btn">
+											{{ __('Create Summary') }}
+										</button>
+									@endif
+									
+									@if(!is_null($work_details->summary_reports))
+										@if($work_details->summary_reports->patient_report)
+											<button onclick="edit_patient_summary()"
+											        class="btn btn-sm btn-outline-primary btn-signin1 mg-t-25 mg-b-10 edit-btn">
+												{{ __('Edit Summary') }}
+											</button>
+										@else
+											<button onclick="edit_patient_summary()"
+											        class="btn btn-sm btn-outline-primary btn-signin1 mg-t-25 mg-b-10 edit-btn">
+												{{ __('Create Summary') }}
+											</button>
+										@endif
+									@endif
 									
 									<button onclick="cancel_edit_patient_summary()"
 									        class="btn btn-sm btn-outline-danger mg-t-25 mg-b-10 save-btn">
@@ -403,39 +330,9 @@
 								</div>
 								
 								<div id="patient_note">
-									{!! $summaryReports->patient_report !!}
-{{--									<p>Dr. Strange, pls review the following recommendations and provide your response--}}
-{{--										to--}}
-{{--										the recommendations fax to 800 555-5555</p>--}}
-{{--									--}}
-{{--									<h6>Recommendation 1</h6>--}}
-{{--									--}}
-{{--									<div>--}}
-{{--										<ul>--}}
-{{--											<li>Renal Dose Adjustment</li>--}}
-{{--											<li>Medication Duplication</li>--}}
-{{--										</ul>--}}
-{{--									</div>--}}
-{{--									--}}
-{{--									<h6>Medication</h6>--}}
-{{--									<p>Venlafaxine 75mg XR, Take 1 tab by mouth before brekfast venlafaxine 225mg, take--}}
-{{--										1--}}
-{{--										tab by mouth before breakfast.</p>--}}
-{{--									--}}
-{{--									<h6>Assessment</h6>--}}
-{{--									<p>Patient is taking total dose of 300mg/dy, but maximum daily dose is 225 mg. This--}}
-{{--										medication also requires renal adjusment for CrCI 10-70 (Patient estimated Cr--}}
-{{--										CI(Cockcroft-Gault):50.5 mL/min) requires a reduction of total daily doe by--}}
-{{--										25-50%.</p>--}}
-{{--									--}}
-{{--									<h6>Plan</h6>--}}
-{{--									<p>Please consider reducing daily dose and renal adjusting this medicine.</p>--}}
-{{--									--}}
-{{--									<h6>References</h6>--}}
-{{--									<p>Lexicomp</p>--}}
-{{--									--}}
-{{--									<h6>Provider Response</h6>--}}
-{{--									<p>Provide Initials and (Yes/No) or explanation</p>--}}
+									@if(!is_null($work_details->summary_reports))
+										{!! $work_details->summary_reports->patient_report !!}
+									@endif
 								</div>
 							</div>
 						</div>
@@ -450,6 +347,8 @@
 
 @section('footerscripts')
 	@parent
+	<!-- Scripts -->
+	<script src="{{ asset('js/app.js') }}" defer></script>
 	<script src="{{asset('assets/lib/jquery.cookie/js/jquery.cookie.js')}}"></script>
 	<script src="{{asset('assets/lib/jquery-toggles/js/toggles.min.js')}}"></script>
 	<script src="{{asset('assets/lib/summernote/summernote-bs4.min.js')}}"></script>
@@ -459,7 +358,7 @@
 		var temp_provider_markup;
 
 		$(function () {
-			'use strict'
+			'use strict';
 
 			$('#patient_summary').hide();
 
@@ -467,7 +366,7 @@
 			$('#provider_summary .edit-btn').show();
 
 			// Toggles Summary
-			$('.summary-toggle').toggles({
+			jQuery('.summary-toggle').toggles({
 				on: true,
 				height: 26,
 				text: {
@@ -520,9 +419,9 @@
 			});
 
 			jQuery.ajax({
-				url: "{{ route('work.store_patient_summary', ['workid' => $workid]) }}",
+				url: "{{ route('work.store_patient_summary', ['workid' => $work_details->id]) }}",
 				method: 'post',
-				data: {work_queue_id: "{{$workid}}", patient_report: markup},
+				data: {work_queue_id: "{{$work_details->id}}", patient_report: markup},
 				success: function (data) {
 					if ('errors' in data) {
 						jQuery.each(data.errors, function (key, value) {
@@ -588,9 +487,9 @@
 			});
 
 			jQuery.ajax({
-				url: "{{ route('work.store_provider_summary', ['workid' => $workid]) }}",
+				url: "{{ route('work.store_provider_summary', ['workid' => $work_details->id]) }}",
 				method: 'post',
-				data: {work_queue_id: "{{$workid}}", provider_report: markup},
+				data: {work_queue_id: "{{$work_details->id}}", provider_report: markup},
 				success: function (data) {
 					if ('errors' in data) {
 						jQuery.each(data.errors, function (key, value) {
@@ -641,12 +540,7 @@
 			$('#provider_summary .edit-btn').hide();
 		};
 	
-		
-		
-		
-		
-		
-		
-		
+	
 	</script>
+
 @endsection

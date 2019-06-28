@@ -20,4 +20,14 @@ class Work_queue extends Model
 	{
 		return $this->belongsTo('App\User', 'reviewer_id', 'id');
 	}
+	
+	public function messages()
+	{
+		return $this->hasMany(Message::class, 'workid', 'id');
+	}
+	
+	public function summary_reports()
+	{
+		return $this->hasOne(Summary_report::class);
+	}
 }
