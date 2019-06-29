@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table medcare.messages: ~59 rows (approximately)
+-- Dumping data for table medcare.messages: ~77 rows (approximately)
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
 REPLACE INTO `messages` (`id`, `user_id`, `workid`, `message`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, 'dsfds', '2019-06-25 11:50:17', '2019-06-25 11:50:17'),
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `summary_reports` (
   CONSTRAINT `summary_reports_work_queue_id_foreign` FOREIGN KEY (`work_queue_id`) REFERENCES `work_queues` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table medcare.summary_reports: ~1 rows (approximately)
+-- Dumping data for table medcare.summary_reports: ~2 rows (approximately)
 /*!40000 ALTER TABLE `summary_reports` DISABLE KEYS */;
 REPLACE INTO `summary_reports` (`id`, `work_queue_id`, `provider_report`, `patient_report`, `created_at`, `updated_at`) VALUES
 	(2, 1, '&lt;p&gt;Mr. Dr. Strange, pls review the following recommendations and provide your response to the recommendations fax to 800 555-5555&lt;/p&gt; &lt;h6&gt;Recommendation 1&lt;/h6&gt; &lt;div&gt; &lt;ul&gt; &lt;li&gt;Renal Dose Adjustment&lt;/li&gt; &lt;li&gt;Medication Duplication&lt;/li&gt; &lt;/ul&gt; &lt;/div&gt; &lt;h6&gt;Medication&lt;/h6&gt; &lt;p&gt;Venlafaxine 75mg XR, Take 1 tab by mouth before brekfast venlafaxine 225mg, take 1 tab by mouth before breakfast.&lt;/p&gt; &lt;h6&gt;Assessment&lt;/h6&gt; &lt;p&gt;Patient is taking total dose of 300mg/dy, but maximum daily dose is 225 mg. This medication also requires renal adjusment for CrCI 10-70 (Patient estimated Cr CI(Cockcroft-Gault):50.5 mL/min) requires a reduction of total daily doe by 25-50%.&lt;/p&gt; &lt;h6&gt;Plan&lt;/h6&gt; &lt;p&gt;Please consider reducing daily dose and renal adjusting this medicine.&lt;/p&gt; &lt;h6&gt;References&lt;/h6&gt; &lt;p&gt;Lexicomp&lt;/p&gt; &lt;h6&gt;Provider Response&lt;/h6&gt; &lt;p&gt;Provide Initials and (Yes/No) or explanation&lt;/p&gt;', '&lt;p&gt;Ms. Dr. Strange, pls review the following recommendations and provide your response\n										to\n										the recommendations fax to 800 555-5555&lt;/p&gt;\n									\n									&lt;h6&gt;Recommendation 1&lt;/h6&gt;\n									\n									&lt;div&gt;\n										&lt;ul&gt;\n											&lt;li&gt;Renal Dose Adjustment&lt;/li&gt;\n											&lt;li&gt;Medication Duplication&lt;/li&gt;\n										&lt;/ul&gt;\n									&lt;/div&gt;\n									\n									&lt;h6&gt;Medication&lt;/h6&gt;\n									&lt;p&gt;Venlafaxine 75mg XR, Take 1 tab by mouth before brekfast venlafaxine 225mg, take\n										1\n										tab by mouth before breakfast.&lt;/p&gt;\n									\n									&lt;h6&gt;Assessment&lt;/h6&gt;\n									&lt;p&gt;Patient is taking total dose of 300mg/dy, but maximum daily dose is 225 mg. This\n										medication also requires renal adjusment for CrCI 10-70 (Patient estimated Cr\n										CI(Cockcroft-Gault):50.5 mL/min) requires a reduction of total daily doe by\n										25-50%.&lt;/p&gt;\n									\n									&lt;h6&gt;Plan&lt;/h6&gt;\n									&lt;p&gt;Please consider reducing daily dose and renal adjusting this medicine.&lt;/p&gt;\n									\n									&lt;h6&gt;References&lt;/h6&gt;\n									&lt;p&gt;Lexicomp&lt;/p&gt;\n									\n									&lt;h6&gt;Provider Response&lt;/h6&gt;\n									&lt;p&gt;Provide Initials and (Yes/No) or explanation&lt;/p&gt;', '2019-06-24 08:35:50', '2019-06-28 12:56:55'),
@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table medcare.users: ~5 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 REPLACE INTO `users` (`id`, `first_name`, `last_name`, `name`, `email`, `id_number`, `password`, `start_date`, `end_date`, `account_type`, `user_role`, `work_live_status`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'user1', NULL, 'siva', 'siva@sqindia.net', 'siva ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-05-01', '2019-10-31', 'admin', '1', NULL, '2019-06-18 11:45:12', 'k6SiGSqJPbYOISmen0wXKEMU5EvWutwuvmWjj44ZoByiEtdB8d1aPi8UtdAV', NULL, '2019-06-18 11:45:12'),
+	(1, 'user1', NULL, 'siva', 'siva@sqindia.net', 'siva ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-05-01', '2019-10-31', 'admin', '1', NULL, '2019-06-18 11:45:12', 'zgPUhCDVqLoaOKgHkKmsctvqklKJTWfnz44xf2f17cZEGEb5pty1HZFPD35Q', NULL, '2019-06-18 11:45:12'),
 	(2, 'user2', 'lname', 'user2 lname', 'user2@sqindia.net', 'user2 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '06/25/2019', 'consultant', '2', 'assigned', '2019-06-19 09:36:56', NULL, NULL, '2019-06-19 11:52:59'),
 	(3, 'user3', NULL, 'user3', 'user3@sqindia.net', 'user3 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', 'consultant', '2', 'assigned', '2019-06-19 14:59:36', NULL, NULL, '2019-06-19 11:51:09'),
 	(4, 'user4', NULL, 'user4', 'user4@sqindia.net', 'user4 ID', '$2y$10$nWOkkfUx/z0OtIsejWW35uBcJURDPD7L/553tTZcnKlUSN4a5eOkG', '2019-04-01', '2019-1-30', 'consultant', '2', 'assigned', '2019-06-19 14:59:39', NULL, NULL, '2019-06-19 11:54:54'),

@@ -1766,6 +1766,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // name: "ChatMessages.vue",
   props: ['work', 'auth'],
@@ -1777,18 +1778,16 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    console.log(this.work);
-    console.log(this.auth);
+    // console.log(this.work);
+    // console.log(this.auth);
     this.fetchMessages(this.work);
     Echo["private"]("chat.".concat(this.work)).listen('MessageSent', function (e) {
-      console.log(e);
-
+      // console.log(e);
       _this.messages.push({
         message: e.message.message,
         user: e.user
-      });
+      }); // console.log(this.messages);
 
-      console.log(_this.messages);
     });
   },
   methods: {
@@ -29769,7 +29768,9 @@ var render = function() {
     "div",
     {
       directives: [{ name: "chat-scroll", rawName: "v-chat-scroll" }],
-      staticClass: "media-list"
+      staticClass:
+        "media-list pd-b-10 w-1/2 bg-grey-lightest border border-grey m-0 px-8 py-4 overflow-x-auto",
+      staticStyle: { height: "50vh" }
     },
     _vm._l(_vm.messages, function(message) {
       return _c("div", { key: message.id, staticClass: "media" }, [
@@ -42009,7 +42010,10 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-Vue.use(__webpack_require__(/*! vue-chat-scroll */ "./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js"));
+Vue.use(__webpack_require__(/*! vue-chat-scroll */ "./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js")); // import Vue from 'vue'
+// import VueChatScroll from 'vue-chat-scroll'
+// Vue.use(VueChatScroll)
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -42029,8 +42033,8 @@ Vue.component('chat-form', __webpack_require__(/*! ./components/ChatForm.vue */ 
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
-  el: '#app',
+var chatApp = new Vue({
+  el: '#chat-app',
   props: ["work"],
   data: {
     messages: []
@@ -42101,14 +42105,23 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * all outgoing HTTP requests automatically have it attached. This is just
  * a simple convenience so we don't have to attach every token manually.
  */
+//Get Token
 
 var token = document.head.querySelector('meta[name="_token"]');
-window.base_url = document.head.querySelector('meta[name="base-url"]').content; // console.log(window.base_url);
 
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+} //Get Base Url
+
+
+var baseUrl = document.head.querySelector('meta[name="base-url"]');
+
+if (baseUrl) {
+  window.base_url = baseUrl.content;
+} else {
+  console.error('Base Url Not Defined');
 }
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

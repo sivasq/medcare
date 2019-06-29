@@ -1,5 +1,5 @@
 <template>
-	<div class="media-list" v-chat-scroll>
+	<div v-chat-scroll class="media-list pd-b-10 w-1/2 bg-grey-lightest border border-grey m-0 px-8 py-4 overflow-x-auto"  style="height: 50vh;">
 		<div class="media" v-for="message in messages" :key="message.id">
 			<img v-if="message.user.id !== auth.id" src="http://via.placeholder.com/500x500"
 			     class="wd-50 rounded-circle"
@@ -28,18 +28,18 @@
 			}
 		},
 		created() {
-			console.log(this.work);
-			console.log(this.auth);
+			// console.log(this.work);
+			// console.log(this.auth);
 			this.fetchMessages(this.work);
 
 			Echo.private(`chat.${this.work}`)
 				.listen('MessageSent', (e) => {
-					console.log(e);
+					// console.log(e);
 					this.messages.push({
 						message: e.message.message,
 						user: e.user
 					});
-					console.log(this.messages);
+					// console.log(this.messages);
 				});
 		},
 		methods: {

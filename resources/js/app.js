@@ -9,6 +9,11 @@ require('./bootstrap');
 window.Vue = require('vue');
 Vue.use(require('vue-chat-scroll'));
 
+// import Vue from 'vue'
+
+// import VueChatScroll from 'vue-chat-scroll'
+// Vue.use(VueChatScroll)
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -31,8 +36,8 @@ Vue.component('chat-form', require('./components/ChatForm.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-	el: '#app',
+const chatApp = new Vue({
+	el: '#chat-app',
 	props: ["work"],
 	data: {
 		messages: [],

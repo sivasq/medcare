@@ -212,7 +212,7 @@
 						</div>
 						
 						<!-- Chats -->
-						<div id="app" class="section-wrapper pd-l-20-force pd-r-20-force mg-t-10-force">
+						<div id="chat-app" class="section-wrapper pd-l-20-force pd-r-20-force mg-t-10-force">
 							<label class="section-title">Chats</label>
 							<div class="card" style="position: inherit;">
 								<div class="message-header" style="position: inherit;">
@@ -220,7 +220,7 @@
 										<img src="http://via.placeholder.com/500x500" alt="">
 										<div class="media-body">
 											<h6>{{$work_details->clientDetail->name}}</h6>
-											{{--											<p>Last seen: 2 hours ago</p>--}}
+											{{--<p>Last seen: 2 hours ago</p>--}}
 										</div><!-- media-body -->
 									</div><!-- media -->
 								</div><!-- message-header -->
