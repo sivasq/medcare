@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\VerifyEmail;
 
 class Client extends Authenticatable implements MustVerifyEmail
 {
@@ -25,7 +26,7 @@ class Client extends Authenticatable implements MustVerifyEmail
 	 *
 	 * @var array
 	 */
-	protected $hidden = ['password'];
+	protected $hidden = ['password','api_token'];
 	
 	/**
 	 * The attributes that should be cast to native types.
@@ -47,5 +48,10 @@ class Client extends Authenticatable implements MustVerifyEmail
 	public function getAgeAttribute()
 	{
 		return Carbon::parse($this->attributes['dob'])->age;
+	}
+	
+	public function sendEmailVerificationNotification()
+	{
+		$this->notify(new VerifyEmail); // my notification
 	}
 }

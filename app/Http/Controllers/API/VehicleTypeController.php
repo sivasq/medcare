@@ -7,14 +7,25 @@
  */
 namespace App\Http\Controllers\API;
 
+use App\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
-use App\VehicleType;
 use Validator;
 
 
 class VehicleTypeController extends BaseController
 {
+	
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware(['verified']);
+	}
+	
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -22,7 +33,7 @@ class VehicleTypeController extends BaseController
 	 */
 	public function index()
 	{
-		$vehicleType = VehicleType::all();
+		$vehicleType = Client::all();
 
 		return $this->sendResponse($vehicleType->toArray(), 'Vehicle Type Retrieved Successfully.');
 	}

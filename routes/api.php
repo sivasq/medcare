@@ -16,16 +16,25 @@ use Illuminate\Http\Request;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-	return $request->user()->api_token;
-	return 'testing';
-});
-
 Route::post('register', 'API\RegisterController@register');
 Route::post('login', 'API\LoginController@login');
 
-//Route::middleware(['auth:api'])->group( function () {
-////	Route::get('userDetails', 'API\LoginController@details');
-////	Route::resource('vehicleTypes', 'API\VehicleTypeController');
-//});
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+	return Auth::user();
+//	return $request->user()->api_token;
+//	return 'testing';
+//	dd(Auth::check());
+//	dd(Auth::guard('api')->check());
+//	return Auth::guard()->user();
+//	return Auth::guard('api')->user();
+//	dd(Auth::user());
+});
+
+Route::get('email/verify', 'API\VerificationController@show')->name('email.verification.notice');
+Route::get('email/verify/{id}', 'API\VerificationController@verify')->name('email.verification.verify');
+Route::get('email/resend', 'API\VerificationController@resend')->name('email.verification.resend');
+
+Route::middleware(['auth:api'])->group( function () {
+	Route::get('userDetails', 'API\VehicleTypeController@index');
+	Route::post('logout', 'API\LoginController@logout');
+});

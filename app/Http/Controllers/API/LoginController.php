@@ -6,22 +6,20 @@ use App\Client;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Validator;
 
 
 class LoginController extends BaseController
 {
+	use AuthenticatesUsers;
 	
 	public function __construct()
 	{
 		$this->middleware('guest:api')->except('logout');
-	}
-	
-	protected function guard()
-	{
-//		return Auth::guard('api');
 	}
 	
 	/**
@@ -37,45 +35,42 @@ class LoginController extends BaseController
 		if ($validator->fails()) {
 			return $this->sendError('Validation Error.', $validator->errors());
 		}
-//		dd(Auth::attempt(['email' => $request->email, 'password' => $request->password]));
-		// For manually logging the user in
-//		dd(Auth::guard('api')->check(['email' => $request->email, 'password' => $request->password]));
 		
+		// For manually logging the user in
 		$user = Client::where('email', $request->email)->first();
-		if($user){
-			if(Hash::check($request->password, $user->password)){
-				$apiToken = uniqid(base64_encode(str_random(60)));
-				// Update Token
-				$postArray = ['api_token' => $apiToken];
-				$login = Client::where('email',$request->email)->update($postArray);
+		if ($user) {
+			if (Hash::check($request->password, $user->password)) {
+				$apiToken = uniqid(base64_encode(Str::random(60)));
+//
+//				// Update Token
+				$login = Client::where('email', $request->email)->update(['api_token' => hash('sha256', $apiToken)]);
 				
-				if($login) {
-					return response()->json([
-						'name'         => $user->name,
-						'email'        => $user->email,
-						'access_token' => $apiToken,
-					]);
+				if ($login) {
+					return $this->sendResponse(Arr::add(Arr::except($user,'api_token'), 'access_token', $apiToken), 'Login Success.');
+//					return $this->sendResponse(['name' => $user->name, 'email' => $user->email, 'access_token' => $apiToken], 'Login Success.');
+				} else {
+					return $this->sendError('Server Error');
 				}
 				
+			} else {
+				return $this->sendError('User Unauthorised');
 			}
-			return "nope";
+		} else {
+			return $this->sendError('User Unauthorised');
 		}
-		
-		
-//		if(Auth::attempt(['email' => $request->email, 'password' => request('password')])){
-//			return 'true';
-//			$user = Auth::client();
-//			$user['token'] = $user->createToken('MyApp')->accessToken;
-//			return $this->sendResponse($user, 'Login Success.');
-//			return $this->sendResponse('', 'Login Success.');
-//		}
-//		return $this->sendResponse('', 'Login Success.');
-//		else{
-//			return $this->sendError('User Unauthorised');
-//		}
 	}
 	
-	use AuthenticatesUsers;
+	/**
+	 * Update the authenticated user's API token.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function logout(Request $request)
+	{
+		$request->user()->forceFill(['api_token' => null])->save();
+		return $this->sendResponse([],'Logout Success.');
+	}
 	
 	/**
 	 * details api
@@ -86,6 +81,13 @@ class LoginController extends BaseController
 	{
 		$user = Auth::User();
 		return $this->sendResponse($user, 'User Details Retrieved Successfully.');
+	}
+	
+	use AuthenticatesUsers;
+	
+	protected function guard()
+	{
+		return Auth::guard('api');
 	}
 	
 }

@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 Auth::routes(['register' => false, 'verify' => true]);
 
 //Route::get('/', function () {
@@ -51,7 +53,9 @@ Route::post('messages', 'ChatsController@sendMessage');
 
 
 
-
+Route::get('/mailverifysuccess', function (Request $request) {
+	return view('auth.client_email_verify');
+});
 
 
 

@@ -1,18 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sivaraj
- * Date: 22-04-2019 022
- * Time: 15:40
- */
 
 namespace App\Http\Controllers\API;
 
+use App\Client;
 use App\Http\Controllers\API\BaseController as BaseController;
-use App\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Validator;
-
 
 class RegisterController extends BaseController
 {
@@ -21,29 +16,27 @@ class RegisterController extends BaseController
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-
+	
 	public function register(Request $request)
 	{
-		$validator = Validator::make($request->all(), [
-			'first_name' => 'required',
-			'last_name' => 'required',
-			'phone' => 'required|unique:users',
-			'country' => 'required',
-			'email' => 'required|email|unique:users',
-			'password' => 'required',
-			'c_password' => 'required|same:password',
-		]);
-
+		$validator = Validator::make($request->all(), ['first_name' => 'required', 'last_name' => 'nullable', 'gender' => 'nullable', 'dob' => 'nullable', 'email' => 'required|email|unique:clients', 'password' => 'required']);
+		
 		if ($validator->fails()) {
 			return $this->sendError('Validation Error.', $validator->errors());
 		}
-
-		$input = $request->all();
-		$input['password'] = bcrypt($input['password']);
-		$user = User::create($input);
-		$success['token'] = $user->createToken('MyApp')->accessToken;
-		$success['name'] = $user->first_name . ' ' . $user->first_name;
-
-		return $this->sendResponse($success, 'User register successfully.');
+		
+		$request->request->add(['name' => $request->input('first_name') . ' ' . $request->input('last_name')]);
+		$request->merge(['password' => Hash::make($request->get('password'))]);
+		$request->merge(array_map('trim', $request->all()));
+		
+		$user = Client::create($request->all());
+		
+		event(new Registered($user));
+		
+		if ($user->exists) {
+			return $this->sendResponse([], 'User register successfully.');
+		} else {
+			return $this->sendError([], 'User registration Error.');
+		}
 	}
 }
