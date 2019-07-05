@@ -36,17 +36,19 @@ class LoginController extends BaseController
 			return $this->sendError('Validation Error.', $validator->errors());
 		}
 		
-		// For manually logging the user in
+		// For Email Exist
 		$user = Client::where('email', $request->email)->first();
 		if ($user) {
 			if (Hash::check($request->password, $user->password)) {
 				$apiToken = uniqid(base64_encode(Str::random(60)));
-//
+
 //				// Update Token
 				$login = Client::where('email', $request->email)->update(['api_token' => hash('sha256', $apiToken)]);
 				
 				if ($login) {
-					return $this->sendResponse(Arr::add(Arr::except($user,'api_token'), 'access_token', $apiToken), 'Login Success.');
+//					return Auth::user();
+//					return $this->sendResponse(Arr::add(Arr::except($user, 'api_token'), 'access_token', $apiToken), 'Login Success.');
+					return Arr::add(Arr::except($user, 'api_token'), 'access_token', $apiToken);
 //					return $this->sendResponse(['name' => $user->name, 'email' => $user->email, 'access_token' => $apiToken], 'Login Success.');
 				} else {
 					return $this->sendError('Server Error');
@@ -63,13 +65,13 @@ class LoginController extends BaseController
 	/**
 	 * Update the authenticated user's API token.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param \Illuminate\Http\Request $request
 	 * @return \Illuminate\Http\Response
 	 */
 	public function logout(Request $request)
 	{
 		$request->user()->forceFill(['api_token' => null])->save();
-		return $this->sendResponse([],'Logout Success.');
+		return $this->sendResponse([], 'Logout Success.');
 	}
 	
 	/**
@@ -82,8 +84,6 @@ class LoginController extends BaseController
 		$user = Auth::User();
 		return $this->sendResponse($user, 'User Details Retrieved Successfully.');
 	}
-	
-	use AuthenticatesUsers;
 	
 	protected function guard()
 	{

@@ -51,14 +51,13 @@ class VerificationController extends BaseController
 		if ($user->exists) {
 			if ($user->hasVerifiedEmail()) {
 //				return response()->json(['message' => 'Email Already verified!']);
-				return redirect('mailverifysuccess')->with('status', 'Profile updated!');
+				return redirect('mailverifysuccess');
 			}
 			
 			if ($user->markEmailAsVerified()) {
 //				return response()->json(['message' => 'Email verified!']);
-				return redirect('mailverifysuccess')->with('status', 'Profile notupdated!');
+				return redirect('mailverifysuccess');
 			}
-			
 		} else {
 			return response()->json('Email not verified!');
 		}

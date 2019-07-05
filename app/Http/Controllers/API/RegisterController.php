@@ -39,4 +39,5 @@ class RegisterController extends BaseController
 			return $this->sendError([], 'User registration Error.');
 		}
 	}
+	
 }

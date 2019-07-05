@@ -17,9 +17,9 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 Route::post('register', 'API\RegisterController@register');
-Route::post('login', 'API\LoginController@login');
+Route::post('login', 'API\LoginController@login')->middleware('client.verified.login');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware(['auth:api', 'client.verified'])->get('/user', function (Request $request) {
 	return Auth::user();
 //	return $request->user()->api_token;
 //	return 'testing';
@@ -35,6 +35,10 @@ Route::get('email/verify/{id}', 'API\VerificationController@verify')->name('emai
 Route::get('email/resend', 'API\VerificationController@resend')->name('email.verification.resend');
 
 Route::middleware(['auth:api'])->group( function () {
-	Route::get('userDetails', 'API\VehicleTypeController@index');
+	Route::get('userDetails', 'API\VehicleTypeController@index')->middleware('client.verified');
 	Route::post('logout', 'API\LoginController@logout');
 });
+
+//1) client registration -> email verification link sent to registered email or mobile -> when client click the given link first time, the email was verified -> when client click the given link after first time, message shows email already verified -> if given was link expired, the message shows link verified.
+
+//1) client registration -> email verification OTP sent to registered email or mobile -> client try to login with their credentials, if email not verified means, message shows please verify email or if email verified means send token -> if OTP expired means ask to resend OTP.
