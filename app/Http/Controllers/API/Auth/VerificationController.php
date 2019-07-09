@@ -6,17 +6,19 @@
  * Time: 13:14
  */
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Auth;
 
 use App\Client;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use function PHPSTORM_META\type;
 
 class VerificationController extends BaseController
 {
 	use VerifiesEmails;
-	
+
 	/**
 	 * Create a new controller instance.
 	 *
@@ -24,11 +26,12 @@ class VerificationController extends BaseController
 	 */
 	public function __construct()
 	{
-		$this->middleware('auth:api')->except(['verify', 'resend']);
-		$this->middleware('signed')->only('verify');
+		$this->middleware('auth:api');
+		//		$this->middleware('auth:api')->except(['verify', 'resend']);
+		//		$this->middleware('signed')->only('verify');
 		$this->middleware('throttle:6,1')->only('verify', 'resend');
 	}
-	
+
 	/**
 	 * Show the email verification notice.
 	 *
@@ -37,7 +40,7 @@ class VerificationController extends BaseController
 	{
 		//
 	}
-	
+
 	/**
 	 * Mark the authenticated user's email address as verified.
 	 *
@@ -46,23 +49,22 @@ class VerificationController extends BaseController
 	 */
 	public function verify(Request $request)
 	{
-		$user = Client::findOrFail($request->route('id'));
-		
+		$user = Auth::user();
+
 		if ($user->exists) {
 			if ($user->hasVerifiedEmail()) {
-//				return response()->json(['message' => 'Email Already verified!']);
-				return redirect('mailverifysuccess');
+				return $this->sendResponse([], 'Email Already verified!');
 			}
-			
-			if ($user->markEmailAsVerified()) {
-//				return response()->json(['message' => 'Email verified!']);
-				return redirect('mailverifysuccess');
+			if ($request->get('otp') === $user->email_otp) {
+				if ($user->markEmailAsVerified()) {
+					return $this->sendResponse([], 'Email verified!');
+				}
+			} else {
+				return $this->sendError([], 'Invalid OTP!');
 			}
-		} else {
-			return response()->json('Email not verified!');
 		}
 	}
-	
+
 	/**
 	 * Resend the email verification notification.
 	 *
@@ -71,16 +73,13 @@ class VerificationController extends BaseController
 	 */
 	public function resend(Request $request)
 	{
-//		return response()->json('Email verified!',200);
-		
 		if ($request->user()->hasVerifiedEmail()) {
-			return response()->json('User already have verified email!', 422);
-//            return redirect($this->redirectPath());
+			return $this->sendResponse([], 'Email Already verified!');
 		}
-		
-		$request->user()->sendEmailVerificationNotification();
-		
-		return response()->json('The notification has been resubmitted');
-//       return back()->with('resent', true);
+
+		if ($request->user()->markEmailAsUnVerified()) {
+			$request->user()->sendEmailVerificationNotification();
+			return $this->sendResponse([], 'The OTP sent to your Registered Email!');
+		}
 	}
 }

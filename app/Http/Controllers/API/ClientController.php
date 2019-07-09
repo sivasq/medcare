@@ -5,17 +5,21 @@
  * Date: 22-04-2019 022
  * Time: 15:32
  */
+
 namespace App\Http\Controllers\API;
 
 use App\Client;
+use App\Http\Resources\Client as ClientResource;
+use App\Http\Resources\ClientCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 
 
-class VehicleTypeController extends BaseController
+class ClientController extends BaseController
 {
-	
+
 	/**
 	 * Create a new controller instance.
 	 *
@@ -25,24 +29,29 @@ class VehicleTypeController extends BaseController
 	{
 		$this->middleware(['verified']);
 	}
-	
+
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @return \Illuminate\Http\Response
+	 * // * @return \Illuminate\Http\Response
 	 */
 	public function index()
 	{
-		$vehicleType = Client::all();
+		//		$user = Auth::user();
+		//		return $user;
+		//		return new ClientCollection(Client::all());
+		//		return $this->sendResponse($user, 'User Details Retrieved Successfully.');
 
-		return $this->sendResponse($vehicleType->toArray(), 'Vehicle Type Retrieved Successfully.');
+		$users = Client::find(9);
+		return new ClientResource($users);
+//		return new ClientCollection($users);
 	}
 
 
 	/**
 	 * Store a newly created resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
+	 * @param \Illuminate\Http\Request $request
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request)
@@ -55,7 +64,7 @@ class VehicleTypeController extends BaseController
 		]);
 
 
-		if($validator->fails()){
+		if ($validator->fails()) {
 			return $this->sendError('Validation Error.', $validator->errors());
 		}
 
@@ -68,7 +77,7 @@ class VehicleTypeController extends BaseController
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param int $id
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show($id)
@@ -86,8 +95,8 @@ class VehicleTypeController extends BaseController
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
+	 * @param \Illuminate\Http\Request $request
+	 * @param int $id
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, VehicleType $vehicleType)
@@ -99,7 +108,7 @@ class VehicleTypeController extends BaseController
 			'description' => 'required'
 		]);
 
-		if($validator->fails()){
+		if ($validator->fails()) {
 			return $this->sendError('Validation Error.', $validator->errors());
 		}
 
@@ -114,7 +123,7 @@ class VehicleTypeController extends BaseController
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
+	 * @param int $id
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy(VehicleType $vehicleType)

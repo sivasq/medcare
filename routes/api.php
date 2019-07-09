@@ -16,8 +16,30 @@ use Illuminate\Http\Request;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+
 Route::post('register', 'API\RegisterController@register');
-Route::post('login', 'API\LoginController@login')->middleware('client.verified.login');
+Route::post('login', 'API\LoginController@login');
+
+Route::middleware(['auth:api'])->group( function () {
+	Route::post('email/verify', 'API\VerificationController@verify');
+	Route::get('email/resend', 'API\VerificationController@resend');
+	Route::get('userDetails', 'API\ClientController@index');
+	Route::post('logout', 'API\LoginController@logout');
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::middleware(['auth:api', 'client.verified'])->get('/user', function (Request $request) {
 	return Auth::user();
@@ -30,15 +52,15 @@ Route::middleware(['auth:api', 'client.verified'])->get('/user', function (Reque
 //	dd(Auth::user());
 });
 
-Route::get('email/verify', 'API\VerificationController@show')->name('email.verification.notice');
-Route::get('email/verify/{id}', 'API\VerificationController@verify')->name('email.verification.verify');
-Route::get('email/resend', 'API\VerificationController@resend')->name('email.verification.resend');
 
-Route::middleware(['auth:api'])->group( function () {
-	Route::get('userDetails', 'API\VehicleTypeController@index')->middleware('client.verified');
-	Route::post('logout', 'API\LoginController@logout');
-});
+
 
 //1) client registration -> email verification link sent to registered email or mobile -> when client click the given link first time, the email was verified -> when client click the given link after first time, message shows email already verified -> if given was link expired, the message shows link verified.
 
 //1) client registration -> email verification OTP sent to registered email or mobile -> client try to login with their credentials, if email not verified means, message shows please verify email or if email verified means send token -> if OTP expired means ask to resend OTP.
+
+
+
+// 1) user Register
+// 2) user Login
+

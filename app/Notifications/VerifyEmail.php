@@ -64,23 +64,39 @@
 namespace App\Notifications;
 
 use Illuminate\Auth\Notifications\VerifyEmail as VerifyEmailBase;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
 
-
 class VerifyEmail extends VerifyEmailBase
 {
-//    use Queueable;
-	
+	// use Queueable;
+
+	/**
+	 * @param mixed $notifiable
+	 * @return MailMessage|mixed
+	 */
+	public function toMail($notifiable)
+	{
+		if (static::$toMailCallback) {
+			return call_user_func(static::$toMailCallback, $notifiable);
+		}
+		return (new MailMessage)
+			->subject('Verify Email Address')
+			->line('Please Enter the Below OTP in Medcare App to verify your email address.')
+			->line('OTP : ' . $notifiable->email_otp)
+			->line('If you did not create an account, no further action is required.');
+	}
+
 	/**
 	 * Get the verification URL for the given notifiable.
 	 *
 	 * @param mixed $notifiable
 	 * @return string
 	 */
-	protected function verificationUrl($notifiable)
-	{
-		return URL::temporarySignedRoute('email.verification.verify', Carbon::now()->addMinutes(5), ['id' => $notifiable->getKey()]);
-	}
+//	protected function verificationUrl($notifiable)
+	//	{
+	//		return URL::temporarySignedRoute('email.verification.verify', Carbon::now()->addMinutes(5), ['id' => $notifiable->getKey()]);
+	//	}
 }

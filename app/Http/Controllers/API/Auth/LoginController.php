@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Auth;
 
 use App\Client;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -16,44 +16,58 @@ use Validator;
 class LoginController extends BaseController
 {
 	use AuthenticatesUsers;
-	
+
 	public function __construct()
 	{
 		$this->middleware('guest:api')->except('logout');
 	}
-	
+
 	/**
 	 * Register api
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	
+
 	public function login(Request $request)
 	{
-		$validator = Validator::make($request->all(), ['email' => 'required|email', 'password' => 'required',]);
-		
+		$emailVerify = false;
+
+		$validator = Validator::make($request->all(),
+			[
+				'email' => 'required|email',
+				'password' => 'required',
+			]
+		);
+
 		if ($validator->fails()) {
 			return $this->sendError('Validation Error.', $validator->errors());
 		}
-		
-		// For Email Exist
+
+		// Check Email Exist and get user
 		$user = Client::where('email', $request->email)->first();
+
 		if ($user) {
+			// Check Email Verified
+			if ($emailVerify) {
+				if (is_null($user->email_verified_at)) {
+					return $this->sendError('Please Verify Email');
+				}
+			}
+
+			// Check Password Match
 			if (Hash::check($request->password, $user->password)) {
 				$apiToken = uniqid(base64_encode(Str::random(60)));
 
-//				// Update Token
-				$login = Client::where('email', $request->email)->update(['api_token' => hash('sha256', $apiToken)]);
-				
-				if ($login) {
-//					return Auth::user();
-//					return $this->sendResponse(Arr::add(Arr::except($user, 'api_token'), 'access_token', $apiToken), 'Login Success.');
-					return Arr::add(Arr::except($user, 'api_token'), 'access_token', $apiToken);
-//					return $this->sendResponse(['name' => $user->name, 'email' => $user->email, 'access_token' => $apiToken], 'Login Success.');
+				// Update Token
+				$updateToken = Client::where('email', $request->email)->update(['api_token' => hash('sha256',
+					$apiToken)]);
+
+				if ($updateToken) {
+					return $this->sendResponse(Arr::add(Arr::except($user, 'api_token'), 'access_token', $apiToken), 'Login Success.');
 				} else {
 					return $this->sendError('Server Error');
 				}
-				
+
 			} else {
 				return $this->sendError('User Unauthorised');
 			}
@@ -61,7 +75,7 @@ class LoginController extends BaseController
 			return $this->sendError('User Unauthorised');
 		}
 	}
-	
+
 	/**
 	 * Update the authenticated user's API token.
 	 *
@@ -73,7 +87,7 @@ class LoginController extends BaseController
 		$request->user()->forceFill(['api_token' => null])->save();
 		return $this->sendResponse([], 'Logout Success.');
 	}
-	
+
 	/**
 	 * details api
 	 *
@@ -84,10 +98,4 @@ class LoginController extends BaseController
 		$user = Auth::User();
 		return $this->sendResponse($user, 'User Details Retrieved Successfully.');
 	}
-	
-	protected function guard()
-	{
-		return Auth::guard('api');
-	}
-	
 }

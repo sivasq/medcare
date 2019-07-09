@@ -15,15 +15,6 @@ class doLoginIfClientVerified
 	 */
 	public function handle($request, Closure $next)
 	{
-		$response = $next($request);
-
-		if(!isNull($response->original))
-		{
-
-		}
-		return response(['success' => false, 'data' => $response->original, 'message' => 'Your email address is not 
-		verified'], 403);
-		//		return response()->json($ResponseData, 200);
-		//		return $response;
+		$next($request);
 	}
 }
