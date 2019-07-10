@@ -27,7 +27,7 @@ class ClientController extends BaseController
 	 */
 	public function __construct()
 	{
-		$this->middleware(['verified']);
+//		$this->middleware(['verified']);
 	}
 
 	/**
@@ -44,7 +44,7 @@ class ClientController extends BaseController
 
 		$users = Client::find(9);
 		return new ClientResource($users);
-//		return new ClientCollection($users);
+		//		return new ClientCollection($users);
 	}
 
 
@@ -52,15 +52,17 @@ class ClientController extends BaseController
 	 * Store a newly created resource in storage.
 	 *
 	 * @param \Illuminate\Http\Request $request
+	 * @param Client $user
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request)
 	{
-		$input = $request->all();
-
-		$validator = Validator::make($input, [
-			'name' => 'required',
-			'description' => 'required'
+		$validator = Validator::make($request->all(), [
+			'first_name' => 'required',
+			'last_name' => 'nullable',
+			'gender' => 'nullable',
+			'dob' => 'sometimes|required|date_format:Y-m-d',
+			'email' => 'required|email|unique:clients',
 		]);
 
 
@@ -68,9 +70,9 @@ class ClientController extends BaseController
 			return $this->sendError('Validation Error.', $validator->errors());
 		}
 
-		$vehicleType = VehicleType::create($input);
+		$userDetails = VehicleType::create($request->all());
 
-		return $this->sendResponse($vehicleType->toArray(), 'VehicleType created successfully.');
+		return $this->sendResponse($userDetails->toArray(), 'User created successfully.');
 	}
 
 
@@ -80,15 +82,9 @@ class ClientController extends BaseController
 	 * @param int $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
+	public function show()
 	{
-		$vehicleType = VehicleType::find($id);
-
-		if (is_null($vehicleType)) {
-			return $this->sendError('VehicleType not found.');
-		}
-
-		return $this->sendResponse($vehicleType->toArray(), 'VehicleType retrieved successfully.');
+		return $this->sendResponse(Auth::user(), 'Profile Details Retrieved Successfully.');
 	}
 
 
@@ -96,27 +92,31 @@ class ClientController extends BaseController
 	 * Update the specified resource in storage.
 	 *
 	 * @param \Illuminate\Http\Request $request
-	 * @param int $id
+	 * @param Client $user
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, VehicleType $vehicleType)
+	public function update(Request $request, Client $user)
 	{
 		$input = $request->all();
 
-		$validator = Validator::make($input, [
-			'name' => 'required',
-			'description' => 'required'
+		$validator = Validator::make($request->all(), [
+			'first_name' => 'required',
+			'last_name' => 'nullable',
+			'gender' => 'nullable',
+			'dob' => 'sometimes|required|date_format:Y-m-d',
+			'email' => 'required|email|unique:clients',
+			'email' => 'required | email | unique:clients,email,' . $user->id,
 		]);
 
 		if ($validator->fails()) {
 			return $this->sendError('Validation Error.', $validator->errors());
 		}
 
-		$vehicleType->name = $input['name'];
-		$vehicleType->description = $input['description'];
-		$vehicleType->save();
+		$user->name = $input['name'];
+		$user->description = $input['description'];
+		$user->save();
 
-		return $this->sendResponse($vehicleType->toArray(), 'VehicleType updated successfully.');
+		return $this->sendResponse($user->toArray(), 'VehicleType updated successfully.');
 	}
 
 

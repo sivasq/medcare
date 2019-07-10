@@ -17,14 +17,17 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-Route::post('register', 'API\RegisterController@register');
-Route::post('login', 'API\LoginController@login');
+Route::post('register', 'API\Auth\RegisterController@register');
+Route::post('login', 'API\Auth\LoginController@login');
 
 Route::middleware(['auth:api'])->group( function () {
-	Route::post('email/verify', 'API\VerificationController@verify');
-	Route::get('email/resend', 'API\VerificationController@resend');
-	Route::get('userDetails', 'API\ClientController@index');
-	Route::post('logout', 'API\LoginController@logout');
+	Route::post('email/verify', 'API\Auth\VerificationController@verify');
+	Route::get('email/resend', 'API\Auth\VerificationController@resend');
+	Route::post('logout', 'API\Auth\LoginController@logout');
+
+	Route::get('profileDetails', 'API\ProfileController@getClientProfile');
+	Route::post('profileDetails', 'API\ProfileController@updateClientProfile');
+	Route::post('profilePicture', 'API\ProfileController@updateClientProfilePicture');
 
 });
 

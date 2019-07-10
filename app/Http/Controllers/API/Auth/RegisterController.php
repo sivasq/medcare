@@ -22,7 +22,8 @@ class RegisterController extends BaseController
 
 	public function register(Request $request)
 	{
-		$autoLogin = true;
+		$autoLogin = false;
+		$sendOtp = false;
 
 		$validator = Validator::make($request->all(), [
 			'first_name' => 'required',
@@ -38,14 +39,16 @@ class RegisterController extends BaseController
 		}
 
 		$request->request->add(['name' => $request->input('first_name') . ' ' . $request->input('last_name')]);
-		$request->request->add(['email_otp' => mt_rand(1000,9999)]);
+		if ($sendOtp) {
+			$request->request->add(['email_otp' => mt_rand(1000, 9999)]);
+		}
 		$request->merge(['password' => Hash::make($request->get('password'))]);
 		$request->merge(array_map('trim', $request->all()));
 
 		$user = Client::create($request->all());
-
-		event(new Registered($user));
-
+		if ($sendOtp) {
+			event(new Registered($user));
+		}
 		if ($user->exists) {
 			if ($autoLogin) {
 				$apiToken = uniqid(base64_encode(Str::random(60)));

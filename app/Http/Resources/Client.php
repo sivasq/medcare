@@ -18,7 +18,7 @@ class Client extends JsonResource
 	    return [
 		    'id' => $this->id,
 		    'name' => $this->name,
-		    'email' => $this->email, // короткая форма чтобы не писать ()->get()
+		    'email' => $this->email,
 		    'hasVerifiedEmail' => $request->user()->hasVerifiedEmail(),
 		    'createdAt' => (string) $this->created_at,
 		    'updatedAt' => (string) $this->updated_at,
