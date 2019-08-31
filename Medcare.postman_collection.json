@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "ff3a45d2-63a9-4fb8-9a0d-afdb9d4cefad",
+		"name": "Medcare",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b498d55e-6004-4106-ad44-d5001166ead2",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setGlobalVariable(\"MedcareToken\", jsonData.data.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"firstname\",\n    \"last_name\": \"\",\n    \"gender\": \"male\",\n    \"email\": \"siva@sqindia.net\",\n    \"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "{{MedcareLocalUrl}}register",
+					"host": [
+						"{{MedcareLocalUrl}}register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d2146d7-7b12-454f-b481-fbe9e78c8bb3",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"// postman.setEnvironmentVariable(\"TokenOogetAdmin\", jsonData.result.token);",
+							"",
+							"postman.setGlobalVariable(\"MedcareToken\", jsonData.data.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"siva@sqindia.net\",\n    \"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "{{MedcareLocalUrl}}login",
+					"host": [
+						"{{MedcareLocalUrl}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OTP Verify",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{MedcareToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"otp\": 8791\n}"
+				},
+				"url": {
+					"raw": "{{MedcareLocalUrl}}email/verify",
+					"host": [
+						"{{MedcareLocalUrl}}email"
+					],
+					"path": [
+						"verify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OTP Resend",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{MedcareToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{MedcareLocalUrl}}email/resend",
+					"host": [
+						"{{MedcareLocalUrl}}email"
+					],
+					"path": [
+						"resend"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Profile Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{MedcareToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{MedcareLocalUrl}}profileDetails",
+					"host": [
+						"{{MedcareLocalUrl}}profileDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Profile Details",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{MedcareToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"firstname\",\n    \"last_name\": \"lastname\",\n    \"gender\": \"male\",\n    \"email\": \"siva@sqindia.net\",\n    \"dob\":\"2019-05-29\",\n    \"password\":\"password\"\n}"
+				},
+				"url": {
+					"raw": "{{MedcareLocalUrl}}profileDetails",
+					"host": [
+						"{{MedcareLocalUrl}}profileDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Profile Picture",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{MedcareToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "profileImage",
+							"type": "file",
+							"src": "/C:/Users/User/Desktop/Logo/sqindia-symbol-logo.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{MedcareLocalUrl}}profilePicture",
+					"host": [
+						"{{MedcareLocalUrl}}profilePicture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{MedcareToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{MedcareLocalUrl}}logout",
+					"host": [
+						"{{MedcareLocalUrl}}logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User for Testing",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{MedcareToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{MedcareLocalUrl}}userDetails",
+					"host": [
+						"{{MedcareLocalUrl}}userDetails"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "eb789a25-2d9d-404c-997f-1453e60cf0c0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a2fd3033-8fb9-43cc-8271-7976bb2b7034",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "56a546e9-f9b2-4c42-ba43-eb98858a9113",
+			"key": "MedcareLocalUrl",
+			"value": "http://192.168.1.99/medcare/public/api/",
+			"type": "string"
+		}
+	]
+}
